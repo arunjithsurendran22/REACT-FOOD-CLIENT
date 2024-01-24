@@ -21,6 +21,7 @@ const Products = () => {
           "http://localhost:3000/api/v1/user/products/product-items/get/list"
         );
         setProducts(response.data);
+        console.log(response.data);
       } catch (error) {
         console.log(error, "failed to fetch products items");
         toast.error("failed to fetch products items");
@@ -54,7 +55,7 @@ const Products = () => {
           </CardHeader>
           <CardBody>
             <Typography variant="h5" color="blue-gray" className="mb-2">
-              {item.title}
+              {item.productTitle}
             </Typography>
             <Typography>{item.description}</Typography>
             <Typography>₹ {item.price}</Typography>
