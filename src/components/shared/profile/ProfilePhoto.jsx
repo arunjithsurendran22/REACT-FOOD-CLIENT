@@ -1,6 +1,7 @@
 import { useState } from "react";
 import api from "../../authorization/api";
 import { toast } from "react-toastify";
+import { BiSolidImageAdd } from "react-icons/bi";
 
 const ProfilePhoto = () => {
   const [selectFile, setSelectFile] = useState(null);
@@ -19,7 +20,7 @@ const ProfilePhoto = () => {
         },
       });
       console.log(response.data);
-      toast.success("Successfully Upload ProfilePhoto");
+      toast.success("Successfully Upload Profile Photo");
     } catch (error) {
       console.error("Failed to upload profile photo", error);
       toast.error("Failed to upload profile photo");
@@ -28,9 +29,17 @@ const ProfilePhoto = () => {
 
   return (
     <div>
-      <h1>Upload Profile Photo</h1>
-      <input type="file" accept="image/*" onChange={handleFileChange} />
-      <button onClick={handleUpload}>Upload</button>
+      <label htmlFor="file-upload" className="custom-file-upload">
+        <input
+          id="file-upload"
+          type="file"
+          accept="image/*"
+          onChange={handleFileChange}
+        />
+      </label>
+      <button onClick={handleUpload}>
+        <BiSolidImageAdd />
+      </button>
     </div>
   );
 };
