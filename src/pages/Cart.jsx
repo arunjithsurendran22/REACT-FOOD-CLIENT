@@ -5,6 +5,7 @@ import Payment from "../components/shared/Payment";
 import { IoCloseSharp } from "react-icons/io5";
 import { IoIosAdd } from "react-icons/io";
 import { GrFormSubtract } from "react-icons/gr";
+import { DrawerPlacement } from "./DrawerPlacement";
 
 const Cart = () => {
   const [cartData, setCartData] = useState([]);
@@ -15,8 +16,9 @@ const Cart = () => {
     const fetchCartData = async () => {
       try {
         const response = await api.get("/products/cart-items/get/list");
-        const { cart, total } = response.data;
-
+        const { cart } = response.data;
+        const total = cart.grandTotal;
+        
         const cartItems = cart.products;
         const cartId = cart._id;
         setCartId(cartId);
@@ -54,7 +56,7 @@ const Cart = () => {
         });
 
         const { cartItem, total } = response.data;
-
+        console.log(total);
         if (cartItem && cartItem.products && Array.isArray(cartItem.products)) {
           setCartData(cartItem.products);
           setTotal(total);
@@ -130,6 +132,7 @@ const Cart = () => {
                   </div>
                 </div>
               ))}
+              <DrawerPlacement />
               <p className="text-xl font-semibold mt-4">Total: ₹{total}</p>
             </div>
           ) : (
