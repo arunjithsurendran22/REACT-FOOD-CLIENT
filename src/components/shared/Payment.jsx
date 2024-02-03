@@ -3,13 +3,13 @@ import api from "../authorization/api";
 import { toast } from "react-toastify";
 import { Button, Radio } from "@material-tailwind/react";
 
-const Payment = ({ total, cartId, vendorId }) => {
+const Payment = ({ cartItem, totalToPay }) => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [mobile, setMobile] = useState("");
   const [userId, setUserId] = useState("");
   const [loading, setLoading] = useState(false);
-  const [address, setAddress] = useState([]);
+  const [addresses, setAddresses] = useState([]);
   const [selectedAddress, setSelectedAddress] = useState(null);
 
   useEffect(() => {
@@ -17,7 +17,6 @@ const Payment = ({ total, cartId, vendorId }) => {
       try {
         const response = await api.get("/profile/get-profile");
         const { _id, name, email, mobile } = response.data;
-
         setName(name);
         setEmail(email);
         setMobile(mobile);
@@ -31,17 +30,19 @@ const Payment = ({ total, cartId, vendorId }) => {
   }, []);
 
   useEffect(() => {
-    const fetchUserAddress = async () => {
+    const fetchAddresses = async () => {
       try {
         const response = await api.get("/profile/add-address/get");
-        const { existAddress } = response.data;
-        setAddress(existAddress);
+        setAddresses(response.data.addresses);
+
+        if (response.data.addresses.length > 0) {
+          setSelectedAddress(response.data.addresses[0]._id);
+        }
       } catch (error) {
-        toast.error("failed to fecth address");
-        console.log("failed to fetch user Address");
+        console.error("Failed to fetch addresses", error);
       }
     };
-    fetchUserAddress();
+    fetchAddresses();
   }, []);
 
   const handlePaymentFailed = (response) => {
@@ -69,7 +70,7 @@ const Payment = ({ total, cartId, vendorId }) => {
       const orderResponse = await api.post(
         "http://localhost:3000/api/v1/user/products/order",
         {
-          amount: total,
+          amount: totalToPay * 100,
           currency: "INR",
           receipt: "qwsaq1",
         },
@@ -86,7 +87,7 @@ const Payment = ({ total, cartId, vendorId }) => {
       // Step 2: Initialize Razorpay payment
       const options = {
         key: "rzp_test_bhZf7vOSAgrRXf",
-        amount: total * 100,
+        amount: totalToPay,
         currency: "INR",
         name: "Food delivery",
         description: "Test Transaction",
@@ -121,13 +122,12 @@ const Payment = ({ total, cartId, vendorId }) => {
             const paymentDetails = {
               orderId,
               paymentId: response.razorpay_payment_id,
-              cartId,
               userId,
               addressId: selectedAddress._id,
-              vendorId,
-              total,
+              cartItem,
+              totalToPay,
             };
-
+            console.log("paymentDetails", paymentDetails);
             try {
               const paymentResponse = await api.post(
                 "http://localhost:3000/api/v1/user/products/order/payment",
@@ -189,7 +189,7 @@ const Payment = ({ total, cartId, vendorId }) => {
           <span className="text-4xl">+</span>
           <span className="ml-2">Add Address</span>
         </div>
-        {address.map((address) => (
+        {addresses.map((address) => (
           <div
             key={address._id}
             className="mb-2 p-4 bg-white rounded-md shadow-md"

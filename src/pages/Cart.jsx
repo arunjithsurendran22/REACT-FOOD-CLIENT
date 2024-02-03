@@ -1,12 +1,12 @@
 import { useState, useEffect } from "react";
 import { toast } from "react-toastify";
 import api from "../components/authorization/api";
+import Payment from "../components/shared/Payment";
+
 
 const Cart = () => {
   const [cartItems, setCartItems] = useState([]);
-  const [addresses, setAddresses] = useState([]);
-  const [selectedAddress, setSelectedAddress] = useState(null);
-
+  
   useEffect(() => {
     const fetchCartItems = async () => {
       try {
@@ -18,26 +18,12 @@ const Cart = () => {
       }
     };
 
-    const fetchAddresses = async () => {
-      try {
-        const response = await api.get("/profile/add-address/get");
-        setAddresses(response.data.addresses);
-
-        if (response.data.addresses.length > 0) {
-          setSelectedAddress(response.data.addresses[0]._id);
-        }
-      } catch (error) {
-        console.error("Failed to fetch addresses", error);
-      }
-    };
-
     fetchCartItems();
-    fetchAddresses();
   }, []);
 
   const handleUpdateQuantity = async (Id, newQuantity) => {
     try {
-      const response = await api.put(`/products/add-to-cart/update/${Id}`, {
+      await api.put(`/products/add-to-cart/update/${Id}`, {
         quantity: newQuantity,
       });
     } catch (error) {
@@ -61,39 +47,18 @@ const Cart = () => {
   );
   const deliveryFee = 40;
   const tip = 0;
-  const platformFee = 5.003;
-  const gstAndCharges = 72.83;
+  const platformFee = 5;
+  const gstAndCharges = 72;
 
   const totalToPay =
     itemTotal + deliveryFee + tip + platformFee + gstAndCharges;
 
-    const handleAddressChange=async()=>{
-      
-    }
+  
   return (
     <>
-      <div className="max-w-screen-md mx-auto mt-10 p-4 bg-gray-100 rounded shadow-md">
-        <div className="mb-4">
-          <h2 className="text-xl font-bold mb-2">Select Address</h2>
-          {addresses.map((address) => (
-            <div key={address._id} className="mb-2">
-              <label>
-                <input
-                  type="radio"
-                  name="address"
-                  value={address._id}
-                  checked={selectedAddress === address._id}
-                  onChange={() => handleAddressChange(address._id)}
-                />
-                <span className="ml-2">
-                  {address.street}, {address.city}, {address.state},{" "}
-                  {address.pincode}
-                </span>
-              </label>
-            </div>
-          ))}
-        </div>
-      </div>
+    <div>
+    <Payment cartItem={cartItems} totalToPay={totalToPay}/>
+    </div>
       <div className="max-w-screen-md mx-auto mt-10 p-4 bg-gray-100 rounded shadow-md">
         <h1 className="text-2xl font-bold mb-4">Shopping Cart</h1>
         {cartItems.map((item) => (
@@ -188,6 +153,7 @@ const Cart = () => {
           </div>
         </div>
       </div>
+      
     </>
   );
 };
