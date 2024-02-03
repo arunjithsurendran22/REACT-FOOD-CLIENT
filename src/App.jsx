@@ -11,6 +11,7 @@ import Orders from "./pages/Orders";
 import Address from "./pages/Address";
 import Favourites from "./pages/Favourites";
 import Settings from "./pages/Settings";
+import VendorPage from "./pages/VendorPage";
 
 function App() {
   return (
@@ -21,6 +22,7 @@ function App() {
         <Route path="/cart" element={<Cart toast={toast} />} />
         <Route path="/register" element={<UserRegister />} />
         <Route path="/login" element={<UserLogin />} />
+        <Route path="/vendor-page/:vendorId" element={<VendorPage/>}/>
         <Route path="/profile" element={<Profile />}>
           <Route path="user-orders" element={<Orders />} />
           <Route path="user-address" element={<Address />} />
