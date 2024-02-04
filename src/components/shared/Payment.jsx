@@ -123,7 +123,7 @@ const Payment = ({ cartItem, totalToPay }) => {
               orderId,
               paymentId: response.razorpay_payment_id,
               userId,
-              addressId: selectedAddress._id,
+              address: selectedAddress,
               cartItem,
               totalToPay,
             };

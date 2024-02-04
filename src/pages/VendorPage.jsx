@@ -10,7 +10,8 @@ import {
   Typography,
   Button,
 } from "@material-tailwind/react";
-import api from "../components/authorization/api";
+import Categories from "../components/shared/Categories";
+
 
 const VendorPage = () => {
   const { vendorId } = useParams();
@@ -29,12 +30,6 @@ const VendorPage = () => {
     };
     fetchVendorData();
   }, [vendorId]);
-
-  const handleClick = async (productId, vendorId) => {
-    await api.post(`/products/add-to-cart/create/${productId}/${vendorId}`);
-    console.log(productId);
-    console.log(vendorId);
-  };
 
   return (
     <>
@@ -80,55 +75,8 @@ const VendorPage = () => {
           </figure>
         )}
       </div>
-      <div className="container mx-auto mt-20 ">
-        {vendorData.products && vendorData.products.length > 0 && (
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-            {vendorData.products.map((product) => (
-              <Card
-                key={product._id}
-                className="w-80 shadow-lg border border-gray-400"
-              >
-                <CardHeader shadow={false} floated={false} className="h-72">
-                  <img
-                    src={product.image}
-                    alt={product.productTitle}
-                    className="h-full w-full object-cover"
-                  />
-                </CardHeader>
-                <CardBody>
-                  <div className="mb-2 flex items-center justify-between">
-                    <Typography color="blue-gray" className="font-medium">
-                      {product.productTitle}
-                    </Typography>
-                    <Typography color="blue-gray" className="font-medium">
-                      ₹{product.price.toFixed(2)}
-                    </Typography>
-                  </div>
-                  <Typography
-                    variant="small"
-                    color="gray"
-                    className="font-normal opacity-75"
-                  >
-                    {product.description}
-                  </Typography>
-                </CardBody>
-                <CardFooter className="pt-0">
-                  <Button
-                    ripple={false}
-                    fullWidth={true}
-                    className="bg-blue-gray-300 text-blue-gray-900 shadow-none hover:scale-105 hover:shadow-none focus:scale-105 focus:shadow-none active:scale-100"
-                    onClick={() =>
-                      handleClick(product._id, vendorData.vendorId)
-                    }
-                  >
-                    Add to Cart
-                  </Button>
-                </CardFooter>
-              </Card>
-            ))}
-          </div>
-        )}
-      </div>
+
+      <Categories vendorId={vendorId} />
     </>
   );
 };
