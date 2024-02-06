@@ -11,7 +11,7 @@ import {
   Button,
 } from "@material-tailwind/react";
 import Categories from "../components/shared/Categories";
-
+import api from "../components/authorization/api";
 
 const VendorPage = () => {
   const { vendorId } = useParams();
@@ -20,9 +20,7 @@ const VendorPage = () => {
   useEffect(() => {
     const fetchVendorData = async () => {
       try {
-        const response = await axios.get(
-          `http://localhost:3000/api/v1/user/products/vendor-page/${vendorId}`
-        );
+        const response = await api.get(`/products/vendor-page/${vendorId}`);
         setVendorData(response.data.formattedData);
       } catch (error) {
         console.log("failed to get restaurant data");

@@ -11,6 +11,7 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
+import api from "../authorization/api";
 
 export function RestaurantCard() {
   const navigate = useNavigate();
@@ -19,9 +20,7 @@ export function RestaurantCard() {
   useEffect(() => {
     const fetchVendorData = async () => {
       try {
-        const response = await axios.get(
-          "http://localhost:3000/api/v1/user/products/vendor-card/get"
-        );
+        const response = await api.get("/products/vendor-card/get");
         setVendorData(response.data);
       } catch (error) {
         console.log("failed to fetch vendor data");

@@ -3,7 +3,7 @@ import api from "../authorization/api";
 import { toast } from "react-toastify";
 import { Button, Radio } from "@material-tailwind/react";
 
-const Payment = ({ cartItem, totalToPay }) => {
+const Payment = ({ cartItem, totalToPay ,vendorId}) => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [mobile, setMobile] = useState("");
@@ -11,6 +11,9 @@ const Payment = ({ cartItem, totalToPay }) => {
   const [loading, setLoading] = useState(false);
   const [addresses, setAddresses] = useState([]);
   const [selectedAddress, setSelectedAddress] = useState(null);
+  
+  console.log(vendorId);
+
 
   useEffect(() => {
     const fetchUserDetails = async () => {
@@ -44,6 +47,7 @@ const Payment = ({ cartItem, totalToPay }) => {
     };
     fetchAddresses();
   }, []);
+  
 
   const handlePaymentFailed = (response) => {
     alert(response.error.code);
@@ -123,6 +127,7 @@ const Payment = ({ cartItem, totalToPay }) => {
               orderId,
               paymentId: response.razorpay_payment_id,
               userId,
+              vendorId,
               address: selectedAddress,
               cartItem,
               totalToPay,

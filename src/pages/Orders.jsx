@@ -7,7 +7,6 @@ const Orders = () => {
   const [orderDetails, setOrderDetails] = useState([]);
   const [productId, setProductId] = useState("");
 
-  console.log(productId);
   useEffect(() => {
     const fetchOrders = async () => {
       try {

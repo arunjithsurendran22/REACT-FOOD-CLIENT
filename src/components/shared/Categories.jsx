@@ -11,14 +11,13 @@ import {
 } from "pure-react-carousel";
 import "pure-react-carousel/dist/react-carousel.es.css";
 
-
 const Categories = ({ vendorId }) => {
-
   const [categories, setCategories] = useState([]);
   const [categoryId, setCategoryId] = useState("");
   const [products, setProducts] = useState([]);
   const [allProducts, setAllProducts] = useState([]);
   const [showAllProducts, setShowAllProducts] = useState(true);
+  const [sortBy, setSortBy] = useState("");
 
   useEffect(() => {
     const fetchData = async () => {
@@ -57,7 +56,13 @@ const Categories = ({ vendorId }) => {
 
   const handleAddToCart = async (productId) => {
     await api.post(`/products/add-to-cart/create/${productId}/${vendorId}`);
-
+  };
+  const handleSort = (sortType) => {
+    setSortBy(sortType);
+    const sortedProducts = [...allProducts].sort((a, b) =>
+      sortType === "lowToHigh" ? a.price - b.price : b.price - a.price
+    );
+    setAllProducts(sortedProducts);
   };
 
   return (
@@ -84,7 +89,18 @@ const Categories = ({ vendorId }) => {
         <ButtonBack>Back</ButtonBack>
         <ButtonNext>Next</ButtonNext>
       </CarouselProvider>
-
+      <button
+        className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-700 focus:outline-none"
+        onClick={() => handleSort("lowToHigh")}
+      >
+        Low to High
+      </button>
+      <button
+        className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-700 focus:outline-none"
+        onClick={() => handleSort("highToLow")}
+      >
+        High to Low
+      </button>
       {showAllProducts ? (
         <div className="flex flex-wrap -mx-4 mt-4">
           {allProducts.map((product) => (

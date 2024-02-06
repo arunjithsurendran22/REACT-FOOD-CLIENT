@@ -1,10 +1,11 @@
-import { Link ,useNavigate} from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import axios from "axios";
+import api from "../components/authorization/api";
 
 function UserRegister() {
   const [formData, setFormData] = useState({});
-  const navigate =useNavigate()
+  const navigate = useNavigate();
 
   const handleChange = (e) => {
     e.preventDefault();
@@ -14,18 +15,14 @@ function UserRegister() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post(
-        "http://localhost:3000/api/v1/user/profile/register",
-        formData
-      );
+      const response = await api.post("/profile/register", formData);
       console.log(response);
       console.log("Registration successful:", response.data);
-      navigate('/login');
+      navigate("/login");
     } catch (error) {
       console.log("Register failed", error.response.data);
     }
   };
-  
 
   return (
     <div className="max-w-lg mx-auto p-4">

@@ -7,7 +7,7 @@ import {
   Button,
 } from "@material-tailwind/react";
 import { useEffect, useState } from "react";
-import axios from "axios";
+import api from "../authorization/api";
 
 const Restaurant = () => {
   const [restaurants, setRestaurants] = useState([]);
@@ -15,9 +15,7 @@ const Restaurant = () => {
   useEffect(() => {
     const fetchRestaurants = async () => {
       try {
-        const response = await axios.get(
-          "http://localhost:3000/api/v1/user/products/restaurant/get/list"
-        );
+        const response = await api.get("/products/restaurant/get/list");
         setRestaurants(response.data.restaurants);
       } catch (error) {
         console.error("Error fetching restaurants:", error);
@@ -32,18 +30,13 @@ const Restaurant = () => {
       {restaurants.map((restaurant) => (
         <Card key={restaurant._id} className="mt-6 w-96 shadow-lg border-2">
           <CardHeader color="blue-gray" className="relative h-56">
-            <img
-              src={restaurant.backgroundImage}
-              alt="card-image"
-            />
+            <img src={restaurant.backgroundImage} alt="card-image" />
           </CardHeader>
           <CardBody>
             <Typography variant="h5" color="blue-gray" className="mb-2">
-              Restaurant Name 
+              Restaurant Name
             </Typography>
-            <Typography>
-              Description 
-            </Typography>
+            <Typography>Description</Typography>
           </CardBody>
           <CardFooter className="pt-0">
             <Button>Read More</Button>

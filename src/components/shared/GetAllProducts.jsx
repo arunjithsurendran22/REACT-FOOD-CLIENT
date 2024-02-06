@@ -1,5 +1,5 @@
-import axios from "axios";
 import React, { useEffect, useState } from "react";
+import api from "../authorization/api";
 
 const GetAllProducts = ({ vendorId }) => {
   const [products, setProducts] = useState([]);
@@ -7,8 +7,8 @@ const GetAllProducts = ({ vendorId }) => {
   useEffect(() => {
     const fetchAllProducts = async () => {
       try {
-        const response = await axios.get(
-          `http://localhost:3000/api/v1/user/products/add-on-product/get/product-all-list/${vendorId}`
+        const response = await api.get(
+          `/products/add-on-product/get/product-all-list/${vendorId}`
         );
         setProducts(response.data.product);
         console.log(response.data);
@@ -42,7 +42,9 @@ const GetAllProducts = ({ vendorId }) => {
                   <p className="text-blue-500 font-bold">${product.price}</p>
                   <button
                     className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-700 focus:outline-none mt-4"
-                    onClick={() => handleAddToCart(product._id, product.vendorId)}
+                    onClick={() =>
+                      handleAddToCart(product._id, product.vendorId)
+                    }
                   >
                     Add to Cart
                   </button>

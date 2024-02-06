@@ -1,32 +1,11 @@
-import { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { useSelector } from "react-redux";
 import { FaShoppingCart } from "react-icons/fa";
-import {
-  Menu,
-  MenuHandler,
-  Button,
-  MenuList,
-  MenuItem,
-} from "@material-tailwind/react";
-import api from "../authorization/api";
-
+import { Menu, MenuHandler, Button, MenuList, MenuItem } from "@material-tailwind/react";
+import { Link } from "react-router-dom";
 
 const CartMenuButton = () => {
-    const [cartItems, setCartItems] = useState([]);
-    
-  useEffect(() => {
-    const fetchCartItems = async () => {
-      try {
-        const response = await api.get("/products/cart-items/get/list");
-        setCartItems(response.data.cart.products);
-      } catch (error) {
-        console.error("Failed to get cart items:", error);
-      }
-    };
-
-    fetchCartItems();
-  }, []);
-
+  // Select cart items from Redux store
+  const cartItems = useSelector((state) => state.cart.cartItems);
 
   return (
     <Menu>

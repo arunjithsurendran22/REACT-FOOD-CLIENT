@@ -13,6 +13,11 @@ const Cart = () => {
   const dispatch = useDispatch();
   const cartItems = useSelector((state) => state.cart.cartItems);
 
+  const items = cartItems.map(item => item.vendorId);
+const vendorId = items.length > 0 ? items[0] : null;
+console.log(vendorId);
+
+
   useEffect(() => {
     const fetchCartItemsFromApi = async () => {
       try {
@@ -66,7 +71,7 @@ const Cart = () => {
       {/* Left Side - Address */}
       <div className="bg-white p-4 rounded-md shadow-md">
         <h1 className="text-2xl font-bold mb-4">Delivery Address</h1>
-        <Payment cartItem={cartItems} totalToPay={totalToPay} />
+        <Payment cartItem={cartItems} totalToPay={totalToPay} vendorId={vendorId}/>
       </div>
 
       {/* Right Side - Cart */}

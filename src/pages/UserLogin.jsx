@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { toast } from "react-toastify";
+import api from "../components/authorization/api";
 
 function UserLogin() {
   const [formData, setFormData] = useState({});
@@ -18,8 +19,8 @@ function UserLogin() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    await axios
-      .post("http://localhost:3000/api/v1/user/profile/login", formData)
+    await api
+      .post("/profile/login", formData)
       .then((response) => {
         console.log(response);
         toast.success("Login Successfully");
@@ -31,7 +32,6 @@ function UserLogin() {
         navigate("/login");
         console.log("Login failed", error.response.data);
         toast.error("Login failed");
-        
       });
   };
 
