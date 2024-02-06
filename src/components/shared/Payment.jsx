@@ -72,7 +72,7 @@ const Payment = ({ cartItem, totalToPay ,vendorId}) => {
 
       // Step 1: Create an order
       const orderResponse = await api.post(
-        "http://localhost:3000/api/v1/user/products/order",
+        "/products/order",
         {
           amount: totalToPay * 100,
           currency: "INR",
@@ -106,7 +106,7 @@ const Payment = ({ cartItem, totalToPay ,vendorId}) => {
           try {
             // Step 3: Validate payment
             const validateRes = await api.post(
-              "http://localhost:3000/api/v1/user/products/order/validate",
+              "/products/order/validate",
               body,
               {
                 headers: {
@@ -135,7 +135,7 @@ const Payment = ({ cartItem, totalToPay ,vendorId}) => {
             console.log("paymentDetails", paymentDetails);
             try {
               const paymentResponse = await api.post(
-                "http://localhost:3000/api/v1/user/products/order/payment",
+                "/products/order/payment",
                 paymentDetails,
                 {
                   headers: {

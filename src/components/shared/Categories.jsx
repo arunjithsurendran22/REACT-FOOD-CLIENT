@@ -22,20 +22,20 @@ const Categories = ({ vendorId }) => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const categoriesResponse = await axios.get(
-          `http://localhost:3000/api/v1/user/products/add-on-category/get-unique-category/list/${vendorId}`
+        const categoriesResponse = await api.get(
+          `/products/add-on-category/get-unique-category/list/${vendorId}`
         );
         setCategories(categoriesResponse.data.filteredCategories);
 
         if (categoryId) {
-          const productsResponse = await axios.get(
-            `http://localhost:3000/api/v1/user/products/add-on-product/get/product-list/${vendorId}/${categoryId}`
+          const productsResponse = await api.get(
+            `/products/add-on-product/get/product-list/${vendorId}/${categoryId}`
           );
           setProducts(productsResponse.data.products);
           setShowAllProducts(false);
         } else {
-          const allProductsResponse = await axios.get(
-            `http://localhost:3000/api/v1/user/products/add-on-product/get/product-all-list/${vendorId}`
+          const allProductsResponse = await api.get(
+            `/products/add-on-product/get/product-all-list/${vendorId}`
           );
           setAllProducts(allProductsResponse.data);
           setShowAllProducts(true);
