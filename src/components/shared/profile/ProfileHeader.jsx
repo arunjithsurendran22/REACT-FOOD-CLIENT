@@ -22,7 +22,7 @@ const ProfileHeader = () => {
     <div className="">
       <div className="">
         {Object.keys(profile).length > 0 ? (
-          <div className="flex justify-between items-center px-10 py-5 shadow-lg rounded-lg border border-b-gray-200">
+          <div className="flex justify-between items-center px-10 py-5 shadow-lg rounded-lg border border-b-gray-200 bg-white">
             <div className="flex justify-between w-80 items-center">
               <img
                 src={profile.image}

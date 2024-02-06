@@ -1,31 +1,38 @@
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
 import api from "../components/authorization/api";
 import Payment from "../components/shared/Payment";
-
+import {
+  setCartItems,
+  updateCartItemQuantity,
+  removeCartItem,
+} from "../components/ReduxToolkit/cartReducer";
 
 const Cart = () => {
-  const [cartItems, setCartItems] = useState([]);
-  
+  const dispatch = useDispatch();
+  const cartItems = useSelector((state) => state.cart.cartItems);
+
   useEffect(() => {
-    const fetchCartItems = async () => {
+    const fetchCartItemsFromApi = async () => {
       try {
         const response = await api.get("/products/cart-items/get/list");
-        setCartItems(response.data.cart.products);
+        dispatch(setCartItems(response.data.cart.products));
       } catch (error) {
         toast.error("Failed to get cart items");
         console.error("Failed to get cart items:", error);
       }
     };
 
-    fetchCartItems();
-  }, []);
+    fetchCartItemsFromApi();
+  }, [dispatch]);
 
   const handleUpdateQuantity = async (Id, newQuantity) => {
     try {
       await api.put(`/products/add-to-cart/update/${Id}`, {
         quantity: newQuantity,
       });
+      dispatch(updateCartItemQuantity({ itemId: Id, newQuantity }));
     } catch (error) {
       console.error("Failed to update quantity:", error);
       toast.error("Failed to update quantity");
@@ -35,6 +42,7 @@ const Cart = () => {
   const handleRemoveItem = async (Id) => {
     try {
       await api.delete(`/products/cart-items-delete/${Id}`);
+      dispatch(removeCartItem(Id));
     } catch (error) {
       console.log("Failed to delete item");
     }
@@ -53,13 +61,16 @@ const Cart = () => {
   const totalToPay =
     itemTotal + deliveryFee + tip + platformFee + gstAndCharges;
 
-  
   return (
-    <>
-    <div>
-    <Payment cartItem={cartItems} totalToPay={totalToPay}/>
-    </div>
-      <div className="max-w-screen-md mx-auto mt-10 p-4 bg-gray-100 rounded shadow-md">
+    <div className="grid grid-cols-1 md:grid-cols-2 gap-4 max-w-screen-xl mx-auto mt-10 p-4 bg-gray-100 rounded shadow-md">
+      {/* Left Side - Address */}
+      <div className="bg-white p-4 rounded-md shadow-md">
+        <h1 className="text-2xl font-bold mb-4">Delivery Address</h1>
+        <Payment cartItem={cartItems} totalToPay={totalToPay} />
+      </div>
+
+      {/* Right Side - Cart */}
+      <div className="bg-white p-4 rounded-md shadow-md">
         <h1 className="text-2xl font-bold mb-4">Shopping Cart</h1>
         {cartItems.map((item) => (
           <div
@@ -153,8 +164,7 @@ const Cart = () => {
           </div>
         </div>
       </div>
-      
-    </>
+    </div>
   );
 };
 

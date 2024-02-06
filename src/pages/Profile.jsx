@@ -4,11 +4,13 @@ import ProfileHeader from "../components/shared/profile/ProfileHeader";
 
 const Profile = () => {
   return (
-    <div className="container mx-auto my-10 h-dvh" style={{border:"2px solid red"}}>
-      <ProfileHeader />
-      <div className="flex flex-row my-10">
-        <ProfileSideBar />
-        <div>{<Outlet />}</div>
+    <div className=" bg-gray-50">
+      <div className="container mx-auto  h-dvh">
+        <ProfileHeader  />
+        <div className="flex flex-row my-10">
+          <ProfileSideBar />
+          <div>{<Outlet />}</div>
+        </div>
       </div>
     </div>
   );

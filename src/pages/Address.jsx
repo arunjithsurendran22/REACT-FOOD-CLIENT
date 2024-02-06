@@ -1,9 +1,11 @@
 import { useState, useEffect } from "react";
-import AddAddress from "../components/shared/AddAddress";
+import AddAddressModal from "../components/shared/AddAddressModal";
 import api from "../components/authorization/api";
+import { FaPlus } from "react-icons/fa"; // Import the plus icon from react-icons library
 
 const Address = () => {
   const [addresses, setAddresses] = useState([]);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   useEffect(() => {
     const fetchAddress = async () => {
@@ -17,12 +19,28 @@ const Address = () => {
     fetchAddress();
   }, []);
 
+  const handleAddAddress = () => {
+    setIsModalOpen(true);
+  };
+
+  const handleCloseModal = () => {
+    setIsModalOpen(false);
+  };
+
   return (
     <div className="flex flex-wrap justify-center p-4">
+      <div className="max-w-sm mx-4 mb-8 bg-white rounded shadow-md p-6 w-72 border border-gray-300 flex justify-center">
+        <button
+          className="flex items-center text-black font-bold py-2 px-4 rounded-full transition duration-300"
+          onClick={handleAddAddress}
+        >
+          <FaPlus className="" />
+        </button>
+      </div>
       {addresses.map((address) => (
         <div
           key={address._id}
-          className="max-w-sm mx-4 mb-8 bg-white rounded shadow-md p-6"
+          className="max-w-sm mx-4 mb-8 bg-white rounded shadow-md p-6 w-72 border border-gray-300"
         >
           <h2 className="text-xl font-bold mb-4">Address</h2>
           <p>
@@ -42,9 +60,8 @@ const Address = () => {
           </p>
         </div>
       ))}
-      <div className="max-w-sm mx-4 mb-8 bg-white rounded shadow-md p-6">
-        {/* AddAddress component goes here */}
-        <AddAddress />
+      <div className="">
+        <AddAddressModal isOpen={isModalOpen} onClose={handleCloseModal} />
       </div>
     </div>
   );

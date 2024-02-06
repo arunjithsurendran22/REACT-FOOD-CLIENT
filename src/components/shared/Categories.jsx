@@ -2,127 +2,89 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import { toast } from "react-toastify";
 import api from "../authorization/api";
+import {
+  CarouselProvider,
+  Slider,
+  Slide,
+  ButtonBack,
+  ButtonNext,
+} from "pure-react-carousel";
+import "pure-react-carousel/dist/react-carousel.es.css";
+
 
 const Categories = ({ vendorId }) => {
+
   const [categories, setCategories] = useState([]);
   const [categoryId, setCategoryId] = useState("");
   const [products, setProducts] = useState([]);
-  const [allProducts, setAllproducts] = useState([]);
-  const [visibleCategories, setVisibleCategories] = useState(5);
-  const [currentCategoryIndex, setCurrentCategoryIndex] = useState(0);
+  const [allProducts, setAllProducts] = useState([]);
   const [showAllProducts, setShowAllProducts] = useState(true);
 
   useEffect(() => {
-    const fetchCategories = async () => {
+    const fetchData = async () => {
       try {
-        const response = await axios.get(
-          "http://localhost:3000/api/v1/user/products/add-on-category/get/list"
+        const categoriesResponse = await axios.get(
+          `http://localhost:3000/api/v1/user/products/add-on-category/get-unique-category/list/${vendorId}`
         );
-        setCategories(response.data.categories);
-      } catch (error) {
-        console.error("Failed to fetch categories", error);
-        toast.error("Failed to fetch categories");
-      }
-    };
+        setCategories(categoriesResponse.data.filteredCategories);
 
-    const fetchProductByCategory = async () => {
-      try {
         if (categoryId) {
-          const response = await axios.get(
+          const productsResponse = await axios.get(
             `http://localhost:3000/api/v1/user/products/add-on-product/get/product-list/${vendorId}/${categoryId}`
           );
-          setProducts(response.data.products);
+          setProducts(productsResponse.data.products);
           setShowAllProducts(false);
+        } else {
+          const allProductsResponse = await axios.get(
+            `http://localhost:3000/api/v1/user/products/add-on-product/get/product-all-list/${vendorId}`
+          );
+          setAllProducts(allProductsResponse.data);
+          setShowAllProducts(true);
         }
       } catch (error) {
-        console.error("Failed to fetch products", error);
-        toast.error("Failed to fetch products");
+        console.error("Failed to fetch data", error);
+        toast.error("Failed to fetch data");
       }
     };
 
-    const fetchAllProducts = async () => {
-      try {
-        const response = await axios.get(
-          `http://localhost:3000/api/v1/user/products/add-on-product/get/product-all-list/${vendorId}`
-        );
-        setAllproducts(response.data);
-        setShowAllProducts(true); // Set the flag to true initially
-      } catch (error) {
-        console.log("Failed to fetch all products");
-      }
-    };
-
-    fetchCategories();
-    fetchProductByCategory();
-    fetchAllProducts();
+    fetchData();
   }, [vendorId, categoryId]);
 
   const handleCategoryId = (Id) => {
     setCategoryId(Id);
-    setShowAllProducts(true); // Set the flag to true when a category is clicked
+    setShowAllProducts(true);
   };
-
-  const handleCategoryChange = (direction) => {
-    if (direction === "next") {
-      if (currentCategoryIndex + visibleCategories < categories.length) {
-        setCurrentCategoryIndex((prevIndex) => prevIndex + 1);
-      }
-    } else if (direction === "prev") {
-      if (currentCategoryIndex > 0) {
-        setCurrentCategoryIndex((prevIndex) => prevIndex - 1);
-      }
-    }
-  };
-
-  const visibleCategoryList = categories.slice(
-    currentCategoryIndex,
-    currentCategoryIndex + visibleCategories
-  );
 
   const handleAddToCart = async (productId) => {
     await api.post(`/products/add-to-cart/create/${productId}/${vendorId}`);
+
   };
 
   return (
     <div className="container mx-auto p-4">
-      <div className="flex flex-wrap -mx-4">
-        {visibleCategoryList.map((category) => (
-          <div
-            key={category._id}
-            className="w-full md:w-1/5 lg:w-1/5 xl:w-1/5 px-4 mb-8"
-          >
-            <div className="p-6 rounded-full shadow-md hover:shadow-lg transition duration-300 flex flex-col">
-              <img
-                src={category.image}
-                alt={category.title}
-                className="w-full h-32 object-cover mb-4 rounded-full"
-              />
-              <button
-                onClick={() => handleCategoryId(category._id)}
-                className="text-lg font-bold text-gray-800 hover:text-blue-500 items-center mb-4"
-              >
-                {category.title}
+      <CarouselProvider
+        naturalSlideWidth={100}
+        naturalSlideHeight={125}
+        totalSlides={categories.length}
+        visibleSlides={6}
+      >
+        <Slider>
+          {categories.map((category, index) => (
+            <Slide index={index} key={category._id}>
+              <button onClick={() => handleCategoryId(category._id)}>
+                <img
+                  src={category.image}
+                  alt={category.title}
+                  className="cursor-pointer w-40"
+                />
               </button>
-            </div>
-          </div>
-        ))}
-      </div>
-      {categories.length > visibleCategories && (
-        <div className="flex justify-between mt-4">
-          <button
-            onClick={() => handleCategoryChange("prev")}
-            className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-700 focus:outline-none"
-          >
-            Previous
-          </button>
-          <button
-            onClick={() => handleCategoryChange("next")}
-            className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-700 focus:outline-none"
-          >
-            Next
-          </button>
-        </div>
-      )}
+            </Slide>
+          ))}
+        </Slider>
+        <ButtonBack>Back</ButtonBack>
+        <ButtonNext>Next</ButtonNext>
+      </CarouselProvider>
+
       {showAllProducts ? (
         <div className="flex flex-wrap -mx-4 mt-4">
           {allProducts.map((product) => (
@@ -158,7 +120,7 @@ const Categories = ({ vendorId }) => {
               key={product._id}
               className="w-full md:w-1/2 lg:w-1/3 xl:w-1/4 px-4 mb-8"
             >
-              <div className="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition duration-300">
+              <div className="bg-white p-6 rounded-lg shadow-lg hover:shadow-lg transition duration-300">
                 <img
                   src={product.image}
                   alt={product.productTitle}

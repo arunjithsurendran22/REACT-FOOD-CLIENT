@@ -41,7 +41,7 @@ export function RestaurantCard() {
         {vendorData.map((vendor) => (
           <Card
             key={vendor.vendorId}
-            className="max-w-[24rem] overflow-hidden shadow-lg border border-gray-400 mb-10 cursor-pointer"
+            className="w-80 h-96 overflow-hidden shadow-lg border border-gray-400 mb-10 cursor-pointer"
           >
             <CardHeader
               floated={false}
