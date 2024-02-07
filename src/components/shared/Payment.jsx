@@ -1,18 +1,20 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import api from "../authorization/api";
 import { toast } from "react-toastify";
-import { Button, Radio } from "@material-tailwind/react";
+import { Button } from "@material-tailwind/react";
+import { useDispatch, useSelector } from "react-redux";
+import { setAddress, selectAddress } from "../ReduxToolkit/addressSlice";
 
-const Payment = ({ cartItem, totalToPay ,vendorId}) => {
+const Payment = ({ cartItem, totalToPay, vendorId }) => {
+  const dispatch = useDispatch();
+  const selectedAddress = useSelector(selectAddress);
+
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [mobile, setMobile] = useState("");
   const [userId, setUserId] = useState("");
   const [loading, setLoading] = useState(false);
   const [addresses, setAddresses] = useState([]);
-  const [selectedAddress, setSelectedAddress] = useState(null);
-  
-  console.log(vendorId);
 
 
   useEffect(() => {
@@ -29,25 +31,23 @@ const Payment = ({ cartItem, totalToPay ,vendorId}) => {
         toast.error("Failed to fetch user data");
       }
     };
-    fetchUserDetails();
-  }, []);
 
-  useEffect(() => {
     const fetchAddresses = async () => {
       try {
         const response = await api.get("/profile/add-address/get");
         setAddresses(response.data.addresses);
 
         if (response.data.addresses.length > 0) {
-          setSelectedAddress(response.data.addresses[0]._id);
+          dispatch(setAddress(response.data.addresses[0]._id));
         }
       } catch (error) {
         console.error("Failed to fetch addresses", error);
       }
     };
+
     fetchAddresses();
-  }, []);
-  
+    fetchUserDetails();
+  }, [dispatch]);
 
   const handlePaymentFailed = (response) => {
     alert(response.error.code);
@@ -187,7 +187,7 @@ const Payment = ({ cartItem, totalToPay ,vendorId}) => {
   };
 
   return (
-    <div className="flex flex-col justify-between ">
+    <div className="flex flex-col justify-between">
       <div className="grid grid-cols-3 gap-4">
         {/* Empty box for adding a new address */}
         <div className="p-4 bg-white rounded-md shadow-md flex items-center justify-center">
@@ -204,8 +204,8 @@ const Payment = ({ cartItem, totalToPay ,vendorId}) => {
               id={address._id}
               name="address"
               value={address}
-              checked={selectedAddress === address}
-              onChange={() => setSelectedAddress(address)}
+              checked={selectedAddress === address._id}
+              onChange={() => dispatch(setAddress(address._id))}
             />
             <label htmlFor={address._id} className="ml-2 block">
               <span className="font-semibold">{address.street}</span>
@@ -220,7 +220,7 @@ const Payment = ({ cartItem, totalToPay ,vendorId}) => {
       <div className="flex justify-center mt-4">
         <Button
           onClick={paymentHandler}
-          disabled={loading}
+          disabled={!selectedAddress}
           className="px-8 py-3 bg-blue-500 text-white rounded-md transition duration-300 ease-in-out hover:bg-blue-600"
         >
           {loading ? "Processing..." : "PROCEED TO PAYMENT"}
@@ -230,4 +230,4 @@ const Payment = ({ cartItem, totalToPay ,vendorId}) => {
   );
 };
 
-export default Payment;
+export default Payment

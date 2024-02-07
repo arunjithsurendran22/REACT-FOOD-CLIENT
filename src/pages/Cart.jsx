@@ -15,7 +15,6 @@ const Cart = () => {
 
   const items = cartItems.map(item => item.vendorId);
 const vendorId = items.length > 0 ? items[0] : null;
-console.log(vendorId);
 
 
   useEffect(() => {
