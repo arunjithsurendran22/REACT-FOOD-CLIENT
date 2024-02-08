@@ -1,0 +1,42 @@
+/* cart.css */
+
+/* Styles for the default layout */
+.my-device {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4px;
+    margin: 10px;
+  }
+  
+  .col-span-12 {
+    width: 100%;
+  }
+  
+  .md\:col-span-8 {
+    grid-column: span 1;
+  }
+  
+  .md\:col-span-4 {
+    grid-column: span 1;
+  }
+  
+  @media screen and (max-width: 640px) {
+    /* Styles for smaller screens */
+    .my-device {
+      display: flex;
+      flex-direction: column;
+    }
+  
+    .col-span-12 {
+      width: 100%;
+    }
+  
+    .md\:col-span-8 {
+      order: 2; /* Reorder the left side (address) to appear after the right side (cart) */
+    }
+  
+    .md\:col-span-4 {
+      order: 1; /* Reorder the right side (cart) to appear before the left side (address) */
+    }
+  }
+  

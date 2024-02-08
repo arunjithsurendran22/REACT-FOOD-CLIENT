@@ -8,6 +8,7 @@ import {
   updateCartItemQuantity,
   removeCartItem,
 } from "../components/ReduxToolkit/cartReducer";
+import "./cart.css";
 
 const Cart = () => {
   const dispatch = useDispatch();
@@ -65,7 +66,7 @@ const Cart = () => {
     itemTotal + deliveryFee + tip + platformFee + gstAndCharges;
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-12 gap-4 mx-10 md:mx-32 mt-10 bg-gray-100 rounded shadow-md">
+    <div className="grid grid-cols-1 md:grid-cols-12 gap-4 mx-10 md:mx-32 mt-10 bg-gray-100 rounded shadow-md my-device">
       {/* Left Side - Address */}
       <div className="col-span-12 md:col-span-8 bg-white p-4 rounded-md shadow-md">
         <Payment
