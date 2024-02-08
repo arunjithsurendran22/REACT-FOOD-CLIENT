@@ -4,7 +4,7 @@ import ProfileHeader from "../components/shared/profile/ProfileHeader";
 
 const Profile = () => {
   return (
-    <div className=" bg-gray-50">
+    <div className="">
       <div className="container mx-auto  h-dvh">
         <ProfileHeader  />
         <div className="flex flex-row my-10">

@@ -26,7 +26,7 @@ function UserRegister() {
 
   return (
     <div className="max-w-lg mx-auto p-4">
-      <div>
+      <div className="mx-10 sm:mx-0">
         <h1 className="font-bold text-3xl text-cyan-600 text-center my-20">
           REGISTER USER
         </h1>

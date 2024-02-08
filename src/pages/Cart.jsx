@@ -13,9 +13,8 @@ const Cart = () => {
   const dispatch = useDispatch();
   const cartItems = useSelector((state) => state.cart.cartItems);
 
-  const items = cartItems.map(item => item.vendorId);
-const vendorId = items.length > 0 ? items[0] : null;
-
+  const items = cartItems.map((item) => item.vendorId);
+  const vendorId = items.length > 0 ? items[0] : null;
 
   useEffect(() => {
     const fetchCartItemsFromApi = async () => {
@@ -66,15 +65,18 @@ const vendorId = items.length > 0 ? items[0] : null;
     itemTotal + deliveryFee + tip + platformFee + gstAndCharges;
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 gap-4 max-w-screen-xl mx-auto mt-10 p-4 bg-gray-100 rounded shadow-md">
+    <div className="grid grid-cols-1 md:grid-cols-12 gap-4 mx-10 md:mx-32 mt-10 bg-gray-100 rounded shadow-md">
       {/* Left Side - Address */}
-      <div className="bg-white p-4 rounded-md shadow-md">
-        <h1 className="text-2xl font-bold mb-4">Delivery Address</h1>
-        <Payment cartItem={cartItems} totalToPay={totalToPay} vendorId={vendorId}/>
+      <div className="col-span-12 md:col-span-8 bg-white p-4 rounded-md shadow-md">
+        <Payment
+          cartItem={cartItems}
+          totalToPay={totalToPay}
+          vendorId={vendorId}
+        />
       </div>
 
       {/* Right Side - Cart */}
-      <div className="bg-white p-4 rounded-md shadow-md">
+      <div className="col-span-12 md:col-span-4 bg-white p-4 rounded-md shadow-md">
         <h1 className="text-2xl font-bold mb-4">Shopping Cart</h1>
         {cartItems.map((item) => (
           <div
@@ -92,16 +94,17 @@ const vendorId = items.length > 0 ? items[0] : null;
                 <p className="text-gray-500">Price: ₹{item.price}</p>
                 <div className="flex items-center mt-2">
                   <button
-                    className="bg-blue-500 text-white px-2 py-1 rounded-md mr-2"
+                    className="bg-red-500 text-white px-2 py-1 rounded-sm mr-2"
                     onClick={() =>
                       handleUpdateQuantity(item._id, item.quantity - 1)
                     }
+                    disabled={item.quantity === 1}
                   >
                     -
                   </button>
                   <span className="text-xl font-bold">{item.quantity}</span>
                   <button
-                    className="bg-blue-500 text-white px-2 py-1 rounded-md ml-2"
+                    className="bg-red-500 text-white px-2 py-1 rounded-sm ml-2"
                     onClick={() =>
                       handleUpdateQuantity(item._id, item.quantity + 1)
                     }

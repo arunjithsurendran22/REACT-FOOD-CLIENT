@@ -188,7 +188,7 @@ const Payment = ({ cartItem, totalToPay, vendorId }) => {
 
   return (
     <div className="flex flex-col justify-between">
-      <div className="grid grid-cols-3 gap-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
         {/* Empty box for adding a new address */}
         <div className="p-4 bg-white rounded-md shadow-md flex items-center justify-center">
           <span className="text-4xl">+</span>
@@ -221,7 +221,7 @@ const Payment = ({ cartItem, totalToPay, vendorId }) => {
         <Button
           onClick={paymentHandler}
           disabled={!selectedAddress}
-          className="px-8 py-3 bg-blue-500 text-white rounded-md transition duration-300 ease-in-out hover:bg-blue-600"
+          className="px-8 py-3 bg-red-500 text-white rounded-md transition duration-300 ease-in-out hover:bg-green-600"
         >
           {loading ? "Processing..." : "PROCEED TO PAYMENT"}
         </Button>
