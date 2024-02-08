@@ -39,7 +39,7 @@ function UserLogin() {
     <div className="max-w-lg mx-auto p-4 ">
       <div>
         <h1 className="font-bold text-3xl text-gray-600 text-center my-20">
-          USER LOGIN
+          LOGIN
         </h1>
         <form onSubmit={handleSubmit} className="flex flex-col gap-4">
           <input

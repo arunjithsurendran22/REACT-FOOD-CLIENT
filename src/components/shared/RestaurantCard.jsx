@@ -33,7 +33,7 @@ export function RestaurantCard() {
       {loading ? (
         <p>Loading...</p>
       ) : (
-        <div className="grid grid-cols-1 mx-20 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-9">
+        <div className="grid grid-cols-1 mx-14 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-9">
           {vendorData.map((vendor) => (
             <div 
               key={vendor.vendorId} 
