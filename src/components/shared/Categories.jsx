@@ -1,5 +1,4 @@
 import { useState, useEffect } from "react";
-import axios from "axios";
 import { toast } from "react-toastify";
 import api from "../authorization/api";
 import {
@@ -57,6 +56,7 @@ const Categories = ({ vendorId }) => {
   const handleAddToCart = async (productId) => {
     await api.post(`/products/add-to-cart/create/${productId}/${vendorId}`);
   };
+
   const handleSort = (sortType) => {
     setSortBy(sortType);
     const sortedProducts = [...allProducts].sort((a, b) =>
@@ -80,7 +80,7 @@ const Categories = ({ vendorId }) => {
                 <img
                   src={category.image}
                   alt={category.title}
-                  className="cursor-pointer w-40"
+                  className="cursor-pointer w-40 rounded-lg shadow-md hover:shadow-xl transition duration-300"
                 />
               </button>
             </Slide>
@@ -101,63 +101,37 @@ const Categories = ({ vendorId }) => {
       >
         High to Low
       </button>
-      {showAllProducts ? (
-        <div className="flex flex-wrap -mx-4 mt-4">
-          {allProducts.map((product) => (
-            <div
-              key={product._id}
-              className="w-full md:w-1/2 lg:w-1/3 xl:w-1/4 px-4 mb-8"
-            >
-              <div className="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition duration-300">
-                <img
-                  src={product.image}
-                  alt={product.productTitle}
-                  className="w-full h-32 object-cover mb-4 rounded-md"
-                />
+      <div className="flex flex-wrap -mx-2 md:-mx-4 mt-4">
+        {(showAllProducts ? allProducts : products).map((product) => (
+          <div
+            key={product._id}
+            className="w-full md:w-1/2 lg:w-1/4 px-2 md:px-4 mb-8 mx-10 md:mx-0"
+          >
+            <div className="bg-white  rounded-lg  transform transition duration-300 hover:scale-105 hover:shadow-lg my-5">
+              <img
+                src={product.image}
+                alt={product.productTitle}
+                className="w-full object-cover mb-4 rounded-t-md"
+              />
+              <div className="px-3 pb-5">
                 <p className="text-lg font-bold text-gray-800 mb-2">
                   {product.productTitle}
                 </p>
                 <p className="text-gray-600 mb-4">{product.description}</p>
-                <p className="text-blue-500 font-bold">${product.price}</p>
+                <p className="text-green-800 font-bold text-xl">₹{product.price}</p>
+              </div>
+              <div className="mx-6">
                 <button
-                  className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-700 focus:outline-none mt-4"
+                  className="bg-red-500 text-white  py-2 mb-5  rounded hover:bg-red-700 focus:outline-none mt-4 transition duration-300  w-full "
                   onClick={() => handleAddToCart(product._id)}
                 >
                   Add to Cart
                 </button>
               </div>
             </div>
-          ))}
-        </div>
-      ) : (
-        <div className="flex flex-wrap -mx-4 mt-4">
-          {products.map((product) => (
-            <div
-              key={product._id}
-              className="w-full md:w-1/2 lg:w-1/3 xl:w-1/4 px-4 mb-8"
-            >
-              <div className="bg-white p-6 rounded-lg shadow-lg hover:shadow-lg transition duration-300">
-                <img
-                  src={product.image}
-                  alt={product.productTitle}
-                  className="w-full h-32 object-cover mb-4 rounded-md"
-                />
-                <p className="text-lg font-bold text-gray-800 mb-2">
-                  {product.productTitle}
-                </p>
-                <p className="text-gray-600 mb-4">{product.description}</p>
-                <p className="text-blue-500 font-bold">${product.price}</p>
-                <button
-                  className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-700 focus:outline-none mt-4"
-                  onClick={() => handleAddToCart(product._id)}
-                >
-                  Add to Cart
-                </button>
-              </div>
-            </div>
-          ))}
-        </div>
-      )}
+          </div>
+        ))}
+      </div>
     </div>
   );
 };

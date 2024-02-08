@@ -33,23 +33,23 @@ const VendorPage = () => {
     <>
       <div>
         {vendorData.address && (
-          <figure className="relative h-96 w-full container mx-auto mt-20">
+          <figure className="relative h-96 w-full container mx-auto mt-20 ">
             <img
-              className="h-full w-full rounded-xl object-cover object-center"
+              className="h-full w-full rounded-xl object-cover object-center transition duration-300 ease-in-out transform hover:scale-105"
               src={vendorData.backgroundImage}
               alt={vendorData.name}
             />
-            <figcaption className="absolute bottom-8 left-2/4 flex w-[calc(100%-4rem)] -translate-x-2/4 justify-between rounded-xl border border-white bg-white/75 py-4 px-6 shadow-lg shadow-black/5 saturate-200 backdrop-blur-sm">
+            <figcaption className="absolute bottom-8 left-2/4 flex w-[calc(100%-4rem)] -translate-x-2/4 justify-between rounded-xl border border-white bg-white/75 py-4 px-6 shadow-lg shadow-black/5 saturate-200 backdrop-blur-sm transition duration-300 ease-in-out hover:shadow-xl">
               <div>
                 <Typography
                   variant="h5"
                   color="blue-gray "
-                  className="flex items-center justify-between"
+                  className="flex items-center justify-between transition duration-300 ease-in-out transform hover:translate-y-[-4px]"
                 >
                   <img
                     src={vendorData.logoImage}
                     alt={vendorData.name}
-                    className="w-16 mr-5 rounded-full"
+                    className="w-16 mr-5 rounded-full shadow-lg transition duration-300 ease-in-out transform hover:-translate-y-[-4px]"
                   />
                   <div className="flex flex-col">
                     <Typography variant="h5">{vendorData.name}</Typography>

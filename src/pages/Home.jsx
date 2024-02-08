@@ -20,7 +20,7 @@ const Home = () => {
       <div className="  flex flex-col justify-center items-center h-52">
         <SwiperCard />
       </div>
-      <div className=" container mx-auto columns-3 mt-20">
+      <div>
         <RestaurantCard />
       </div>
     </div>
