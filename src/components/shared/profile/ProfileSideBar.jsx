@@ -22,6 +22,10 @@ import {
   TabPanel,
 } from "@material-tailwind/react";
 import "./profile.css";
+import { MdRestaurantMenu } from "react-icons/md";
+import { FaAddressCard } from "react-icons/fa";
+import { MdFavorite } from "react-icons/md";
+import { CiSettings } from "react-icons/ci";
 
 const ProfileSideBar = () => {
   const data = [
@@ -79,7 +83,7 @@ const ProfileSideBar = () => {
               <SpeedDialContent>
                 <Link to="/profile/user-orders">
                   <SpeedDialAction className="h-16 w-16">
-                    <HomeIcon className="h-5 w-5" />
+                    <MdRestaurantMenu className="h-5 w-5" />
                     <Typography
                       color="blue-gray"
                       className="text-xs font-normal"
@@ -90,7 +94,7 @@ const ProfileSideBar = () => {
                 </Link>
                 <Link to="/profile/user-address">
                   <SpeedDialAction className="h-16 w-16">
-                    <CogIcon className="h-4 w-5" />
+                    <FaAddressCard className="h-4 w-5" />
                     <Typography
                       color="blue-gray"
                       className="text-xs font-normal"
@@ -101,7 +105,7 @@ const ProfileSideBar = () => {
                 </Link>
                 <Link to="/profile/user-favourites">
                   <SpeedDialAction className="h-16 w-16">
-                    <Square3Stack3DIcon className="h-5 w-5" />
+                    <MdFavorite className="h-5 w-5" />
                     <Typography
                       color="blue-gray"
                       className="text-xs font-normal"
@@ -112,7 +116,7 @@ const ProfileSideBar = () => {
                 </Link>
                 <Link to="/profile/settings">
                   <SpeedDialAction className="h-16 w-16">
-                    <Square3Stack3DIcon className="h-5 w-5" />
+                    <CiSettings className="h-5 w-5" />
                     <Typography
                       color="blue-gray"
                       className="text-xs font-normal"

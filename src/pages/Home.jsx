@@ -2,7 +2,7 @@ import { HeroImage } from "../components/shared/HeroImage";
 import burgerImage from "../assets/stickyBurgerhalf.png";
 import "../components/shared/Style/style.css";
 import { RestaurantCard } from "../components/shared/RestaurantCard";
-import SwiperCard from "../components/shared/SwiperCard";
+import HomePageCategories from "../components/shared/HomePageCategories";
 
 const Home = () => {
   return (
@@ -17,8 +17,8 @@ const Home = () => {
       <div>
         <HeroImage className="relative" />
       </div>
-      <div className="  flex flex-col justify-center items-center h-52">
-        <SwiperCard />
+      <div className="mt-10">
+        <HomePageCategories />
       </div>
       <div>
         <RestaurantCard />
