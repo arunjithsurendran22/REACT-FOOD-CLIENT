@@ -116,7 +116,7 @@ const Cart = () => {
               </div>
             </div>
             <div className="flex items-center">
-              <p className="text-lg">₹{item.totalPrice.toFixed(2)}</p>
+              
               <button
                 className="ml-4 text-red-500 hover:text-red-700 focus:outline-none"
                 onClick={() => handleRemoveItem(item._id)}
