@@ -30,7 +30,7 @@ const Orders = () => {
   };
 
   return (
-    <div className="grid grid-cols-1  md:grid-cols-2 lg:grid-cols-3 lg:gap-4 gap-4">
+    <div className="grid grid-cols-1  md:grid-cols-2 lg:grid-cols-3 lg:gap-4 gap-4 mx-20 sm:mx-0">
       {orderDetails.map((order) => (
         <div
           key={order._id}

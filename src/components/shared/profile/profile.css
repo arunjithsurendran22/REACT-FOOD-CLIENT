@@ -1,0 +1,25 @@
+
+
+#speed-dial{
+    display: none;
+    position: fixed;
+  }
+
+.my-div{
+    display: none;
+}
+@media screen and (max-width: 640px) {
+    #sidebar {
+      display: none;
+    }
+    #speed-dial{
+        display: block;
+        position: sticky;
+      }
+      .my-div{
+        display: block;
+        position: fixed;
+        margin-top: 500px;
+      }
+  }
+  

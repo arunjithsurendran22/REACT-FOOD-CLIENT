@@ -1,4 +1,18 @@
-import React from "react";
+import {
+  IconButton,
+  SpeedDial,
+  SpeedDialHandler,
+  SpeedDialContent,
+  SpeedDialAction,
+  Typography,
+} from "@material-tailwind/react";
+import {
+  PlusIcon,
+  HomeIcon,
+  CogIcon,
+  Square3Stack3DIcon,
+} from "@heroicons/react/24/outline";
+
 import { Link } from "react-router-dom";
 import {
   Tabs,
@@ -7,6 +21,7 @@ import {
   Tab,
   TabPanel,
 } from "@material-tailwind/react";
+import "./profile.css";
 
 const ProfileSideBar = () => {
   const data = [
@@ -29,31 +44,89 @@ const ProfileSideBar = () => {
   ];
 
   return (
-    <div className="flex h-full">
-      <div className="mr-4 h-96 mt-20" >
-        <Tabs value="html" orientation="vertical" className="h-full">
-          <TabsHeader className="w-32 h-full">
-            {data.map(({ label, link }) => (
-              <Link to={link} key={link}>
-                <Tab value={link} className="cursor-pointer h-16">
-                  {label}
-                </Tab>
-              </Link>
-            ))}
-          </TabsHeader>
-          <TabsBody className="h-full">
-            {data.map(({ link, desc }) => (
-              <TabPanel key={link} value={link} className="py-0 h-full">
-                {desc}
-              </TabPanel>
-            ))}
-          </TabsBody>
-        </Tabs>
+    <>
+      <div className="flex h-full " id="sidebar">
+        <div className="mr-4 h-96 mt-20">
+          <Tabs value="html" orientation="vertical" className="h-full">
+            <TabsHeader className="w-32 h-full">
+              {data.map(({ label, link }) => (
+                <Link to={link} key={link}>
+                  <Tab value={link} className="cursor-pointer h-16">
+                    {label}
+                  </Tab>
+                </Link>
+              ))}
+            </TabsHeader>
+            <TabsBody className="h-full">
+              {data.map(({ link, desc }) => (
+                <TabPanel key={link} value={link} className="py-0 h-full">
+                  {desc}
+                </TabPanel>
+              ))}
+            </TabsBody>
+          </Tabs>
+        </div>
       </div>
-      <ul className="">
-        
-      </ul>
-    </div>
+      <div className="my-div w-16 h-16">
+        <div className="h-72 w-16 static " id="speed-dial">
+          <div className="absolute top-0 left-0">
+            <SpeedDial>
+              <SpeedDialHandler>
+                <IconButton size="lg" className="rounded-full">
+                  <PlusIcon className="h-5 w-5 transition-transform group-hover:rotate-45" />
+                </IconButton>
+              </SpeedDialHandler>
+              <SpeedDialContent>
+                <Link to="/profile/user-orders">
+                  <SpeedDialAction className="h-16 w-16">
+                    <HomeIcon className="h-5 w-5" />
+                    <Typography
+                      color="blue-gray"
+                      className="text-xs font-normal"
+                    >
+                      Orders
+                    </Typography>
+                  </SpeedDialAction>
+                </Link>
+                <Link to="/profile/user-address">
+                  <SpeedDialAction className="h-16 w-16">
+                    <CogIcon className="h-4 w-5" />
+                    <Typography
+                      color="blue-gray"
+                      className="text-xs font-normal"
+                    >
+                      Address
+                    </Typography>
+                  </SpeedDialAction>
+                </Link>
+                <Link to="/profile/user-favourites">
+                  <SpeedDialAction className="h-16 w-16">
+                    <Square3Stack3DIcon className="h-5 w-5" />
+                    <Typography
+                      color="blue-gray"
+                      className="text-xs font-normal"
+                    >
+                      Favorites
+                    </Typography>
+                  </SpeedDialAction>
+                </Link>
+                <Link to="/profile/settings">
+                  <SpeedDialAction className="h-16 w-16">
+                    <Square3Stack3DIcon className="h-5 w-5" />
+                    <Typography
+                      color="blue-gray"
+                      className="text-xs font-normal"
+                    >
+                      Settings
+                    </Typography>
+                  </SpeedDialAction>
+                </Link>
+              </SpeedDialContent>
+            </SpeedDial>
+          </div>
+        </div>
+      </div>
+    </>
   );
 };
 
