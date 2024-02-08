@@ -66,7 +66,7 @@ const Cart = () => {
     itemTotal + deliveryFee + tip + platformFee + gstAndCharges;
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-12 gap-4 mx-10 md:mx-32 mt-10 bg-gray-100 rounded shadow-md my-device">
+    <div className="grid grid-cols-1 md:grid-cols-12 gap-4 mx-10 md:mx-32 mt-10 bg-gray-100 rounded  my-device">
       {/* Left Side - Address */}
       <div className="col-span-12 md:col-span-8 bg-white p-4 rounded-md shadow-md">
         <Payment
@@ -143,7 +143,7 @@ const Cart = () => {
           <p className="text-center">Your cart is empty.</p>
         )}
 
-        <div className="mt-8">
+        <div className="mt-8 italic">
           <h2 className="text-xl font-bold mb-4">Bill Details</h2>
           <div className="flex justify-between mb-2">
             <p>Item Total</p>
@@ -167,8 +167,8 @@ const Cart = () => {
           </div>
           <hr className="my-4 border-t border-gray-300" />
           <div className="flex justify-between mt-4">
-            <p className="text-xl font-bold">TO PAY</p>
-            <p className="text-xl font-bold">₹ {totalToPay.toFixed(2)}</p>
+            <p className="text-xl font-bold text-red-900">TO PAY</p>
+            <p className="text-xl font-bold text-red-900">₹ {totalToPay.toFixed(2)}</p>
           </div>
         </div>
       </div>
