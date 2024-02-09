@@ -37,8 +37,8 @@ const HomePageCategories = () => {
 
   const handleClick = async (categoryId) => {
     try {
-      const response = await axios.get(
-        `http://localhost:3000/api/v1/user/products/add-on-category/get-vendor-List/${categoryId}`
+      const response = await api.get(
+        `/products/add-on-category/get-vendor-List/${categoryId}`
       );
       setCategoriesData(response.data.formattedData);
       setSelectedCategoryId(categoryId); // Set the selected category ID
