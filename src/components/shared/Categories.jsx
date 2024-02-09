@@ -9,6 +9,7 @@ import {
   ButtonNext,
 } from "pure-react-carousel";
 import "pure-react-carousel/dist/react-carousel.es.css";
+import { FaArrowUp, FaArrowDown } from "react-icons/fa";
 
 const Categories = ({ vendorId }) => {
   const [categories, setCategories] = useState([]);
@@ -17,6 +18,8 @@ const Categories = ({ vendorId }) => {
   const [allProducts, setAllProducts] = useState([]);
   const [showAllProducts, setShowAllProducts] = useState(true);
   const [sortBy, setSortBy] = useState("");
+  const [activeIndex, setActiveIndex] = useState(0);
+  const [visibleSlides, setVisibleSlides] = useState(6);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -48,6 +51,39 @@ const Categories = ({ vendorId }) => {
     fetchData();
   }, [vendorId, categoryId]);
 
+  useEffect(() => {
+    const handleResize = () => {
+      const screenWidth = window.innerWidth;
+      if (screenWidth < 640) {
+        setVisibleSlides(4);
+      } else if (screenWidth < 768) {
+        setVisibleSlides(4);
+      } else if (screenWidth < 1024) {
+        setVisibleSlides(8);
+      } else {
+        setVisibleSlides(8);
+      }
+    };
+
+    handleResize();
+    window.addEventListener("resize", handleResize);
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
+
+  const handleNext = () => {
+    setActiveIndex((prevIndex) =>
+      prevIndex === categories.length - 1 ? 0 : prevIndex + 1
+    );
+  };
+
+  const handleBack = () => {
+    setActiveIndex((prevIndex) =>
+      prevIndex === 0 ? categories.length - 1 : prevIndex - 1
+    );
+  };
+
   const handleCategoryId = (Id) => {
     setCategoryId(Id);
     setShowAllProducts(true);
@@ -58,11 +94,18 @@ const Categories = ({ vendorId }) => {
   };
 
   const handleSort = (sortType) => {
-    setSortBy(sortType);
-    const sortedProducts = [...allProducts].sort((a, b) =>
-      sortType === "lowToHigh" ? a.price - b.price : b.price - a.price
-    );
+    let sortedProducts;
+    if (sortBy === sortType) {
+      // Toggle sorting direction if same sort type is clicked again
+      sortedProducts = [...allProducts].reverse();
+    } else {
+      // Sort products based on the selected sort type
+      sortedProducts = [...allProducts].sort((a, b) =>
+        sortType === "lowToHigh" ? a.price - b.price : b.price - a.price
+      );
+    }
     setAllProducts(sortedProducts);
+    setSortBy(sortType);
   };
 
   return (
@@ -71,7 +114,8 @@ const Categories = ({ vendorId }) => {
         naturalSlideWidth={100}
         naturalSlideHeight={125}
         totalSlides={categories.length}
-        visibleSlides={6}
+        visibleSlides={visibleSlides}
+        currentSlide={activeIndex}
       >
         <Slider>
           {categories.map((category, index) => (
@@ -86,21 +130,25 @@ const Categories = ({ vendorId }) => {
             </Slide>
           ))}
         </Slider>
-        <ButtonBack>Back</ButtonBack>
-        <ButtonNext>Next</ButtonNext>
+        <ButtonBack onClick={handleBack}>Back</ButtonBack>
+        <ButtonNext onClick={handleNext}>Next</ButtonNext>
       </CarouselProvider>
-      <button
-        className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-700 focus:outline-none"
-        onClick={() => handleSort("lowToHigh")}
-      >
-        Low to High
-      </button>
-      <button
-        className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-700 focus:outline-none"
-        onClick={() => handleSort("highToLow")}
-      >
-        High to Low
-      </button>
+      <div className="flex justify-between mt-4">
+        <button
+          className="flex items-center bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-700 focus:outline-none"
+          onClick={() => handleSort("lowToHigh")}
+        >
+          Low to High
+          {sortBy === "lowToHigh" && <FaArrowUp className="ml-2" />}
+        </button>
+        <button
+          className="flex items-center bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-700 focus:outline-none"
+          onClick={() => handleSort("highToLow")}
+        >
+          High to Low
+          {sortBy === "highToLow" && <FaArrowDown className="ml-2" />}
+        </button>
+      </div>
       <div className="flex flex-wrap -mx-2 md:-mx-4 mt-4">
         {(showAllProducts ? allProducts : products).map((product) => (
           <div
@@ -118,7 +166,9 @@ const Categories = ({ vendorId }) => {
                   {product.productTitle}
                 </p>
                 <p className="text-gray-600 mb-4">{product.description}</p>
-                <p className="text-green-800 font-bold text-xl">₹{product.price}</p>
+                <p className="text-green-800 font-bold text-xl">
+                  ₹{product.price}
+                </p>
               </div>
               <div className="mx-6">
                 <button

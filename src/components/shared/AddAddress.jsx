@@ -49,6 +49,7 @@ const AddAddress = () => {
             value={street}
             onChange={(e) => setStreet(e.target.value)}
             className="mt-1 p-2 border border-gray-300 rounded w-full"
+            required
           />
         </div>
         <div className="mb-4">
@@ -65,6 +66,7 @@ const AddAddress = () => {
             value={city}
             onChange={(e) => setCity(e.target.value)}
             className="mt-1 p-2 border border-gray-300 rounded w-full"
+            required
           />
         </div>
         <div className="mb-4">
@@ -81,6 +83,7 @@ const AddAddress = () => {
             value={state}
             onChange={(e) => setState(e.target.value)}
             className="mt-1 p-2 border border-gray-300 rounded w-full"
+            required
           />
         </div>
         <div className="mb-4">
@@ -97,6 +100,7 @@ const AddAddress = () => {
             value={landmark}
             onChange={(e) => setLandmark(e.target.value)}
             className="mt-1 p-2 border border-gray-300 rounded w-full"
+            required
           />
         </div>
         <div className="mb-4">
@@ -113,11 +117,12 @@ const AddAddress = () => {
             value={pincode}
             onChange={(e) => setPincode(e.target.value)}
             className="mt-1 p-2 border border-gray-300 rounded w-full"
+            required
           />
         </div>
         <button
           type="submit"
-          className="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-700"
+          className="bg-red-500 text-white py-2 px-4 rounded hover:bg-green-700 w-full"
         >
           ADD
         </button>

@@ -8,10 +8,10 @@ const AddAddressModal = ({ isOpen, onClose }) => {
         isOpen ? "" : "hidden"
       }`}
     >
-      <div className="bg-white p-8 rounded-lg shadow-md w-3/12 h-3/3">
+      <div className="bg-white w-96 rounded-lg">
         <div className="flex justify-end">
-          <button className="absolute text-black " onClick={onClose}>
-            <IoMdClose className="text-red-600" />
+          <button className="absolute text-black  p-9" onClick={onClose}>
+            <IoMdClose className="text-red-600 hover:text-2xl font-extrabold" />
           </button>
         </div>
         <AddAddress onClose={onClose} /> 
