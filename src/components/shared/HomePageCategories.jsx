@@ -119,7 +119,7 @@ const HomePageCategories = () => {
 
       {/* Category items */}
       <div>
-        <div className="grid grid-cols-2 mx-5 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8 mt-32">
+        <div className="grid grid-cols-2 mx-5 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8 mt-16 sm:mt-0">
           {selectedCategoryId &&
             categoriesData.map((vendor) => (
               <div
@@ -134,13 +134,13 @@ const HomePageCategories = () => {
                     className="w-full h-40 object-cover object-center"
                   />
                   <div className="p-4 h-36">
-                    <h2 className="text-gray-900 font-semibold text-lg mb-2">
+                    <h2 className="text-gray-900 font-medium italic text-lg mb-2">
                       {vendor.name}
                     </h2>
                     <p className="text-gray-600 text-sm mb-2">
                       {vendor.address.street}, {vendor.address.state}
                     </p>
-                    <p className="text-gray-600 text-sm mb-2">
+                    <p className="text-gray-600 text-xs mb-2">
                       {vendor.workingHours.map((hour) => (
                         <span key={hour.day}>
                           {hour.day}: {hour.openingHours} {hour.openingState} -{" "}

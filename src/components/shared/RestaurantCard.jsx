@@ -28,7 +28,7 @@ const RestaurantCard=()=> {
   };
 
   return (
-      <div className="container mx-auto mt-20">
+      <div className="container mx-auto mt-1 sm:mt-10">
         {loading ? (
           <p>Loading...</p>
         ) : (
@@ -52,7 +52,7 @@ const RestaurantCard=()=> {
                     <p className="text-gray-600 text-sm mb-2">
                       {vendor.address.street}, {vendor.address.state}
                     </p>
-                    <p className="text-gray-600 text-sm mb-2">
+                    <p className="text-gray-600 text-xs mb-2">
                       {vendor.workingHours.map((hour) => (
                         <span key={hour.day}>
                           {hour.day}: {hour.openingHours} {hour.openingState} -{" "}
