@@ -4,26 +4,17 @@ import "../../components/shared/Style/style.css";
 
 export function HeroImage() {
   return (
-    <div className="flex flex-col md:flex-row justify-between md:bg-white h-96 md:h-fit">
-      <div className="flex flex-col justify-around w-full  md:w-6/12 bg-green-400">
-        <div className="flex flex-col justify-between h-40 md:h-96  items-center">
-          <div className="text-2xl lg:text-7xl font-light italic">
-            <h1>We believe good food</h1>
-            <h1>Offers great smiles</h1>
-          </div>
-          <div></div>
-        </div>
+    <div className="bg-green-600 grid grid-cols-2 container mx-auto h-screen/1.25">
+      <div className="flex flex-col justify-center text-2xl  md:font-extrabold md:text-4xl lg:text-5xl mx-auto hero-text">
+        <h1>We believe good food</h1>
+        <h1>Offers great smiles</h1>
       </div>
-      <div className="w-full md:w-6/12">
-        <img
-          src={bgImage}
-          alt=""
-          className="relative w-fit t hidden md:block"
-        />
+      <div>
+        <img src={bgImage} alt="" className="relative h-full" />
         <img
           src={burgerImage}
-          alt=""
-          className="absolute top-52 w-5/12  shake-animation"
+          alt={burgerImage}
+          className="absolute top-20 w-4/12  shake-animation"
         />
       </div>
     </div>
