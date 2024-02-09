@@ -91,7 +91,7 @@ const ProfileEdit = () => {
       <div className="flex flex-wrap gap-4 ">
         <Button
           onClick={openDrawerRight}
-          className="md:bg-red-500 md:hover:bg-red-800 md:block hover:bg-red-700 "
+          className="md:bg-red-500 md:hover:bg-red-800 md:block hover:bg-red-700  items-center p-2 md:p-5"
         >
           <MdEdit />
         </Button>
