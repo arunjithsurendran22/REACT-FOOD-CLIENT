@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const api = axios.create({
-  baseURL: "http://react-food-delivery-h5oa.onrender.com/api/v1/user",
+  baseURL: "https://react-food-delivery-h5oa.onrender.com/api/v1/user",
 });
 
 // Request interceptor for adding the bearer token
