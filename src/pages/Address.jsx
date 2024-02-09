@@ -4,6 +4,7 @@ import api from "../components/authorization/api";
 import { FaPlus, FaTimes } from "react-icons/fa"; // Import the plus and times icons from react-icons library
 import { toast } from "react-toastify";
 
+
 const Address = () => {
   const [addresses, setAddresses] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -39,7 +40,6 @@ const Address = () => {
       console.error("Failed to delete address", error);
     }
   };
-  
 
   return (
     <div className="flex flex-wrap justify-center p-4">

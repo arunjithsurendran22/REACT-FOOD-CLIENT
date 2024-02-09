@@ -6,10 +6,23 @@ import api from "../components/authorization/api";
 
 function UserLogin() {
   const [formData, setFormData] = useState({});
+  const [errors, setErrors] = useState({});
   const navigate = useNavigate();
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.id]: e.target.value });
+  };
+
+  const validateForm = () => {
+    const errors = {};
+    if (!formData.email || !formData.email.trim()) {
+      errors.email = "Email is required";
+    }
+    if (!formData.password) {
+      errors.password = "Password is required";
+    }
+    setErrors(errors);
+    return Object.keys(errors).length === 0;
   };
 
   const handleLoginToken = (token) => {
@@ -19,20 +32,17 @@ function UserLogin() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    await api
-      .post("/profile/login", formData)
-      .then((response) => {
-        console.log(response);
+    if (validateForm()) {
+      try {
+        const response = await api.post("/profile/login", formData);
         toast.success("Login Successfully");
         handleLoginToken(response.data);
-        console.log("Login successful", response.data);
         navigate("/");
-      })
-      .catch((error) => {
-        navigate("/login");
+      } catch (error) {
         console.log("Login failed", error.response.data);
         toast.error("Login failed");
-      });
+      }
+    }
   };
 
   return (
@@ -46,16 +56,22 @@ function UserLogin() {
             type="email"
             id="email"
             placeholder="email"
-            className="bg-slate-100 p-3 rounded-xl shadow-lg"
+            className={`bg-slate-100 p-3 rounded-xl shadow-lg ${
+              errors.email && "border-red-500"
+            }`}
             onChange={handleChange}
           />
+          {errors.email && <span className="text-red-500">{errors.email}</span>}
           <input
             type="password"
             id="password"
             placeholder="password"
-            className="bg-slate-100 p-3 rounded-xl shadow-lg"
+            className={`bg-slate-100 p-3 rounded-xl shadow-lg ${
+              errors.password && "border-red-500"
+            }`}
             onChange={handleChange}
           />
+          {errors.password && <span className="text-red-500">{errors.password}</span>}
           <button
             type="submit"
             className="bg-gray-800 text-cyan-50 p-3 my-6 rounded-xl shadow-inner text-xl font-bold hover:opacity-90"
@@ -63,7 +79,7 @@ function UserLogin() {
             LOGIN
           </button>
         </form>
-        <span className="my-5 italic">Dont have an Account ?</span>
+        <span className="my-5 italic">Don't have an Account ?</span>
         <Link to="/register">
           <span className="text-blue-600 mx-5 font-bold">Register</span>
         </Link>

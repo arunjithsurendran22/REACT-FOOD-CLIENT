@@ -35,11 +35,11 @@ const ProfilePhoto = () => {
           type="file"
           accept="image/*"
           onChange={handleFileChange}
+          style={{ display: "none" }} 
+          className="cursor-pointer"
         />
+        <BiSolidImageAdd onClick={handleUpload} />
       </label>
-      <button onClick={handleUpload}>
-        <BiSolidImageAdd />
-      </button>
     </div>
   );
 };

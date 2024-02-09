@@ -3,10 +3,10 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 const addressSlice = createSlice({
-  name: 'address',
+  name: 'addresses',
   initialState: {
     selectedAddress: null,
-  },
+  },  
   reducers: {
     setAddress: (state, action) => {
       state.selectedAddress = action.payload;

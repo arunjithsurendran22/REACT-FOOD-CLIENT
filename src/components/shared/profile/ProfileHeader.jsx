@@ -1,6 +1,8 @@
 import { useState, useEffect } from "react";
 import api from "../../authorization/api";
 import { toast } from "react-toastify";
+import ProfileEdit from "./ProfileEdit";
+import ProfilePhoto from "./ProfilePhoto";
 
 const ProfileHeader = () => {
   const [profile, setProfile] = useState({});
@@ -27,8 +29,10 @@ const ProfileHeader = () => {
               <img
                 src={profile.image}
                 alt="profile-image"
-                className="w-24 rounded-full shadow-lg"
+                className="w-24 rounded-full shadow-lg relative"
               />
+              <ProfilePhoto />
+
               <div>
                 <p>
                   <strong>{profile.name}</strong>
@@ -37,14 +41,12 @@ const ProfileHeader = () => {
                 <p>{profile.mobile}</p>
               </div>
             </div>
-            <div className="">
-              <button className="px-16 py-2 rounded-lg shadow-lg bg-orange-300 font-bold hover:bg-orange-600">
-                EDIT
-              </button>
+            <div>
+              <ProfileEdit />
             </div>
           </div>
         ) : (
-          <p>Loading profile...</p>
+          <p>please login</p>
         )}
       </div>
     </div>
