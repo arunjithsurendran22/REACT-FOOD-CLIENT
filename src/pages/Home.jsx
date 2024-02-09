@@ -1,7 +1,6 @@
 import { HeroImage } from "../components/shared/HeroImage";
 import burgerImage from "../assets/stickyBurgerhalf.png";
 import "../components/shared/Style/style.css";
-import { RestaurantCard } from "../components/shared/RestaurantCard";
 import HomePageCategories from "../components/shared/HomePageCategories";
 
 const Home = () => {
@@ -19,9 +18,6 @@ const Home = () => {
       </div>
       <div className="mt-10">
         <HomePageCategories />
-      </div>
-      <div>
-        <RestaurantCard />
       </div>
     </div>
   );

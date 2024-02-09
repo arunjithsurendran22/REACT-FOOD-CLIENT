@@ -8,15 +8,19 @@ import {
 } from "pure-react-carousel";
 import "pure-react-carousel/dist/react-carousel.es.css";
 import api from "../authorization/api";
-import { FaLongArrowAltRight } from "react-icons/fa";
-import { FaLongArrowAltLeft } from "react-icons/fa";
-import './Style/style.css'
+import { FaLongArrowAltRight, FaLongArrowAltLeft } from "react-icons/fa";
+import axios from "axios";
+import RestaurantCard from "../shared/RestaurantCard";
+import { useNavigate } from "react-router-dom";
 
 
 const HomePageCategories = () => {
+  const navigate = useNavigate();
   const [categories, setCategories] = useState([]);
+  const [categoriesData, setCategoriesData] = useState([]);
   const [activeIndex, setActiveIndex] = useState(0);
   const [visibleSlides, setVisibleSlides] = useState(5);
+  const [selectedCategoryId, setSelectedCategoryId] = useState(null); // Track selected category
 
   useEffect(() => {
     const fetchCategories = async () => {
@@ -24,11 +28,24 @@ const HomePageCategories = () => {
         const response = await api.get("/products/add-on-category/get/list");
         setCategories(response.data.categories);
       } catch (error) {
-        console.log("failed to get categories");
+        console.log("Failed to get categories");
       }
     };
+
     fetchCategories();
   }, []);
+
+  const handleClick = async (categoryId) => {
+    try {
+      const response = await axios.get(
+        `http://localhost:3000/api/v1/user/products/add-on-category/get-vendor-List/${categoryId}`
+      );
+      setCategoriesData(response.data.formattedData);
+      setSelectedCategoryId(categoryId); // Set the selected category ID
+    } catch (error) {
+      console.log("Failed to fetch vendor data");
+    }
+  };
 
   useEffect(() => {
     const handleResize = () => {
@@ -44,12 +61,12 @@ const HomePageCategories = () => {
       }
     };
 
-    handleResize(); // Call the function initially to set the correct number of visible slides
-    window.addEventListener("resize", handleResize); // Add event listener for window resize
+    handleResize();
+    window.addEventListener("resize", handleResize);
     return () => {
-      window.removeEventListener("resize", handleResize); // Cleanup event listener
+      window.removeEventListener("resize", handleResize);
     };
-  }, []); // Empty dependency array ensures the effect runs only once on component mount
+  }, []);
 
   const handleNext = () => {
     setActiveIndex((prevIndex) =>
@@ -63,13 +80,19 @@ const HomePageCategories = () => {
     );
   };
 
+  
+  const handleVendorPage = (vendorId) => {
+    navigate(`/vendor-page/${vendorId}`);
+  };
+
   return (
     <div className="container mx-auto">
+      {/* Category carousel */}
       <CarouselProvider
         naturalSlideWidth={100}
         naturalSlideHeight={125}
         totalSlides={categories.length}
-        visibleSlides={visibleSlides} // Use the dynamic number of visible slides
+        visibleSlides={visibleSlides}
         currentSlide={activeIndex}
       >
         <Slider>
@@ -78,7 +101,8 @@ const HomePageCategories = () => {
               <img
                 src={category.image}
                 alt={category.title}
-                className="cursor-pointer w-40 rounded-lg shadow-md hover:shadow-xl transition duration-300"
+                className="cursor-pointer w-40 shadow-md hover:shadow-xl transition duration-300"
+                onClick={() => handleClick(category._id)}
               />
             </Slide>
           ))}
@@ -92,6 +116,52 @@ const HomePageCategories = () => {
           </ButtonNext>
         </div>
       </CarouselProvider>
+
+      {/* Category items */}
+      <div>
+        <div className="grid grid-cols-2 mx-5 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8 mt-32">
+          {selectedCategoryId &&
+            categoriesData.map((vendor) => (
+              <div
+                className="cursor-pointer transform transition duration-300 hover:scale-105 hover:shadow-lg"
+                key={vendor.id}
+                onClick={() => handleVendorPage(vendor.vendorId)}
+              >
+                <div className="bg-white shadow-lg rounded-lg overflow-hidden">
+                  <img
+                    src={vendor.backgroundImage}
+                    alt={vendor.name}
+                    className="w-full h-40 object-cover object-center"
+                  />
+                  <div className="p-4 h-36">
+                    <h2 className="text-gray-900 font-semibold text-lg mb-2">
+                      {vendor.name}
+                    </h2>
+                    <p className="text-gray-600 text-sm mb-2">
+                      {vendor.address.street}, {vendor.address.state}
+                    </p>
+                    <p className="text-gray-600 text-sm mb-2">
+                      {vendor.workingHours.map((hour) => (
+                        <span key={hour.day}>
+                          {hour.day}: {hour.openingHours} {hour.openingState} -{" "}
+                          {hour.closingHours} {hour.closingState}
+                          <br />
+                        </span>
+                      ))}
+                    </p>
+                  </div>
+                </div>
+              </div>
+            ))}
+        </div>
+      </div>
+
+      {/* Default items */}
+      {!selectedCategoryId && (
+        <div>
+          <RestaurantCard />
+        </div>
+      )}
     </div>
   );
 };
