@@ -1,3 +1,4 @@
+import { useDispatch } from 'react-redux';
 import { useState, useEffect } from "react";
 import { toast } from "react-toastify";
 import api from "../authorization/api";
@@ -10,8 +11,13 @@ import {
 } from "pure-react-carousel";
 import "pure-react-carousel/dist/react-carousel.es.css";
 import { FaArrowUp, FaArrowDown } from "react-icons/fa";
+import { addToCart } from "../ReduxToolkit/cartReducer";
+
+
 
 const Categories = ({ vendorId }) => {
+
+  const dispatch = useDispatch();
   const [categories, setCategories] = useState([]);
   const [categoryId, setCategoryId] = useState("");
   const [products, setProducts] = useState([]);
@@ -91,6 +97,8 @@ const Categories = ({ vendorId }) => {
 
   const handleAddToCart = async (productId) => {
     await api.post(`/products/add-to-cart/create/${productId}/${vendorId}`);
+    dispatch(addToCart({ _id: productId, quantity: 1 }));
+    toast.success("added to cart");
   };
 
   const handleSort = (sortType) => {

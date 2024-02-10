@@ -4,6 +4,7 @@ import { toast } from "react-toastify";
 import { Button } from "@material-tailwind/react";
 import { useDispatch, useSelector } from "react-redux";
 import { setAddress, selectAddress } from "../ReduxToolkit/addressSlice";
+import AddAddressModal from "../shared/AddAddressModal";
 
 const Payment = ({ cartItem, totalToPay, vendorId }) => {
   const dispatch = useDispatch();
@@ -15,7 +16,13 @@ const Payment = ({ cartItem, totalToPay, vendorId }) => {
   const [userId, setUserId] = useState("");
   const [loading, setLoading] = useState(false);
   const [addresses, setAddresses] = useState([]);
-
+  const [isAddAddressModalOpen, setIsAddAddressModalOpen] = useState(false);
+  const [isPaymentDisabled, setIsPaymentDisabled] = useState(false);
+  // Function to toggle the address modal
+  const toggleAddAddressModal = () => {
+    setIsAddAddressModalOpen(!isAddAddressModalOpen);
+    setIsPaymentDisabled(!isPaymentDisabled);
+  };
 
   useEffect(() => {
     const fetchUserDetails = async () => {
@@ -191,8 +198,18 @@ const Payment = ({ cartItem, totalToPay, vendorId }) => {
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
         {/* Empty box for adding a new address */}
         <div className="p-4 bg-white rounded-md shadow-md flex items-center justify-center">
-          <span className="text-4xl">+</span>
-          <span className="ml-2">Add Address</span>
+          {/* Button to open the address modal */}
+          <div className="flex justify-center mt-4">
+            <button onClick={toggleAddAddressModal} className="">
+              +
+            </button>
+          </div>
+
+          {/* Address modal */}
+          <AddAddressModal
+            isOpen={isAddAddressModalOpen}
+            onClose={toggleAddAddressModal}
+          />
         </div>
         {addresses.map((address) => (
           <div
@@ -216,18 +233,20 @@ const Payment = ({ cartItem, totalToPay, vendorId }) => {
           </div>
         ))}
       </div>
-
-      <div className="flex justify-center mt-4">
-        <Button
-          onClick={paymentHandler}
-          disabled={!selectedAddress}
-          className="px-8 py-3 bg-red-500 text-white rounded-md transition duration-300 ease-in-out hover:bg-green-600"
-        >
-          {loading ? "Processing..." : "PROCEED TO PAYMENT"}
-        </Button>
-      </div>
+      {/* Render payment button only if address modal is closed */}
+      {!isAddAddressModalOpen && (
+        <div className="flex justify-center mt-4">
+          <Button
+            onClick={paymentHandler}
+            disabled={!selectedAddress}
+            className="px-8 py-3 bg-red-500 text-white rounded-md transition duration-300 ease-in-out hover:bg-green-600"
+          >
+            {loading ? "Processing..." : "PROCEED TO PAYMENT"}
+          </Button>
+        </div>
+      )}
     </div>
   );
 };
 
-export default Payment
+export default Payment;

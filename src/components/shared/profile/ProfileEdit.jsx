@@ -8,6 +8,7 @@ import {
 import { MdEdit } from "react-icons/md";
 import api from "../../authorization/api";
 import { toast } from "react-toastify";
+import ProfilePhoto from './ProfilePhoto'
 
 const ProfileEdit = () => {
   const [openRight, setOpenRight] = useState(false);
@@ -106,6 +107,7 @@ const ProfileEdit = () => {
         <div className="mb-6 flex items-center justify-between">
           <Typography variant="h5" color="blue-gray">
             Edit profile
+            <ProfilePhoto />
           </Typography>
           <IconButton
             variant="text"
