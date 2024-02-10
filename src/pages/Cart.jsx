@@ -7,8 +7,10 @@ import {
   setCartItems,
   updateCartItemQuantity,
   removeCartItem,
+  updateGrandTotal,
 } from "../components/ReduxToolkit/cartReducer";
 import "./cart.css";
+import AddCoupon from "../components/shared/AddCoupon";
 
 const Cart = () => {
   const dispatch = useDispatch();
@@ -37,6 +39,8 @@ const Cart = () => {
         quantity: newQuantity,
       });
       dispatch(updateCartItemQuantity({ itemId: Id, newQuantity }));
+      const newGrandTotal = calculateGrandTotal();
+      dispatch(updateGrandTotal(newGrandTotal));
     } catch (error) {
       console.error("Failed to update quantity:", error);
       toast.error("Failed to update quantity");
@@ -47,12 +51,20 @@ const Cart = () => {
     try {
       await api.delete(`/products/cart-items-delete/${Id}`);
       dispatch(removeCartItem(Id));
+      const newGrandTotal = calculateGrandTotal();
+      dispatch(updateGrandTotal(newGrandTotal));
     } catch (error) {
       console.log("Failed to delete item");
     }
   };
 
-  // Calculate the item total, delivery fee, platform fee, GST, and total to pay
+  const calculateGrandTotal = () => {
+    return cartItems.reduce(
+      (total, item) => total + item.price * item.quantity,
+      0
+    );
+  };
+
   const itemTotal = cartItems.reduce(
     (total, item) => total + item.price * item.quantity,
     0
@@ -66,8 +78,7 @@ const Cart = () => {
     itemTotal + deliveryFee + tip + platformFee + gstAndCharges;
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-12 gap-4 mx-10 md:mx-32 mt-10 bg-gray-100 rounded  my-device">
-      {/* Left Side - Address */}
+    <div className="grid grid-cols-1 md:grid-cols-12 gap-4 mx-10 md:mx-32 mt-10 bg-gray-100 rounded my-device">
       <div className="col-span-12 md:col-span-8 bg-white p-4 rounded-md shadow-md">
         <Payment
           cartItem={cartItems}
@@ -76,7 +87,6 @@ const Cart = () => {
         />
       </div>
 
-      {/* Right Side - Cart */}
       <div className="col-span-12 md:col-span-4 bg-white p-4 rounded-md shadow-md">
         <h1 className="text-2xl font-bold mb-4">Shopping Cart</h1>
         {cartItems.map((item) => (
@@ -116,7 +126,6 @@ const Cart = () => {
               </div>
             </div>
             <div className="flex items-center">
-              
               <button
                 className="ml-4 text-red-500 hover:text-red-700 focus:outline-none"
                 onClick={() => handleRemoveItem(item._id)}
@@ -142,7 +151,7 @@ const Cart = () => {
         {cartItems.length === 0 && (
           <p className="text-center">Your cart is empty.</p>
         )}
-
+        <AddCoupon />
         <div className="mt-8 italic">
           <h2 className="text-xl font-bold mb-4">Bill Details</h2>
           <div className="flex justify-between mb-2">
@@ -168,7 +177,9 @@ const Cart = () => {
           <hr className="my-4 border-t border-gray-300" />
           <div className="flex justify-between mt-4">
             <p className="text-xl font-bold text-red-900">TO PAY</p>
-            <p className="text-xl font-bold text-red-900">₹ {totalToPay.toFixed(2)}</p>
+            <p className="text-xl font-bold text-red-900">
+              ₹ {totalToPay.toFixed(2)}
+            </p>
           </div>
         </div>
       </div>

@@ -1,8 +1,10 @@
+// cartReducer.js
 
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
   cartItems: [],
+  grandTotal: 0, // Initialize grandTotal in the initial state
 };
 
 const cartSlice = createSlice({
@@ -38,6 +40,10 @@ const cartSlice = createSlice({
       const itemId = action.payload;
       state.cartItems = state.cartItems.filter((item) => item._id !== itemId);
     },
+    updateGrandTotal: (state, action) => {
+      state.grandTotal = action.payload; 
+      console.log(state.grandTotal);
+    },
   },
 });
 
@@ -46,5 +52,6 @@ export const {
   addToCart,
   updateCartItemQuantity,
   removeCartItem,
+  updateGrandTotal,
 } = cartSlice.actions;
 export default cartSlice.reducer;

@@ -1,10 +1,16 @@
 import React, { useState } from "react";
-import { FaHome, FaSearch, FaBars, FaTimes, FaShoppingCart } from "react-icons/fa";
+import {
+  FaHome,
+  FaSearch,
+  FaBars,
+  FaTimes,
+  FaShoppingCart,
+} from "react-icons/fa";
 import { VscSignIn } from "react-icons/vsc";
 import { SiGnuprivacyguard } from "react-icons/si";
 import { FaUserTie } from "react-icons/fa";
 import { Link } from "react-router-dom";
-import CartMenuButton from "./CartMenuButton"
+import CartMenuButton from "./CartMenuButton";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -18,7 +24,12 @@ const Navbar = () => {
     { key: "search", label: "Search", path: "/search", icon: <FaSearch /> },
     { key: "cart", label: "Cart", path: "/cart", icon: <FaShoppingCart /> },
     { key: "login", label: "Login", path: "/login", icon: <VscSignIn /> },
-    { key: "register", label: "Register", path: "/register", icon: <SiGnuprivacyguard /> },
+    {
+      key: "register",
+      label: "Register",
+      path: "/register",
+      icon: <SiGnuprivacyguard />,
+    },
     { key: "profile", label: "Profile", path: "/profile", icon: <FaUserTie /> },
   ];
 
@@ -26,7 +37,13 @@ const Navbar = () => {
     <nav className="shadow-md p-4 sticky top-0 z-50 bg-white">
       <div className="container mx-auto flex justify-between items-center">
         <div className="flex items-center">
-          <span className="text-2xl font-bold text-gray-900">Logo</span>
+          <span className="text-2xl font-bold text-gray-900">
+            <img
+              src="https://i.pinimg.com/originals/72/7e/f7/727ef7286f28b289fd1188eefdd2b626.jpg"
+              alt=""
+              className="w-12"
+            />
+          </span>
         </div>
 
         <div className="hidden md:flex space-x-4">

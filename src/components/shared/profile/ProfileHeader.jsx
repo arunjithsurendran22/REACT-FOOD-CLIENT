@@ -63,10 +63,10 @@ const ProfileHeader = () => {
               <p>{profile.mobile || "+123456789"}</p>
             </div>
           </div>
-          <div className="flex justify-between w-16 md:w-32">
+          <div className="flex flex-col justify-between h-16 items-center">
             {isLoggedIn && (
               <button onClick={handleLogout}>
-                <LiaSignOutAltSolid />
+                <LiaSignOutAltSolid  className=""/>
               </button>
             )}
             <ProfileEdit />

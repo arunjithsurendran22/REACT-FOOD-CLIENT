@@ -8,7 +8,7 @@ import {
 import { MdEdit } from "react-icons/md";
 import api from "../../authorization/api";
 import { toast } from "react-toastify";
-import ProfilePhoto from './ProfilePhoto'
+import ProfilePhoto from "./ProfilePhoto";
 
 const ProfileEdit = () => {
   const [openRight, setOpenRight] = useState(false);
@@ -92,7 +92,7 @@ const ProfileEdit = () => {
       <div className="flex flex-wrap gap-4 ">
         <Button
           onClick={openDrawerRight}
-          className="md:bg-red-500 md:hover:bg-red-800 md:block hover:bg-red-700  items-center p-2 md:p-5"
+          className="md:bg-red-500 md:hover:bg-red-800 md:block hover:bg-red-700  items-center  md:p-2 p-2"
         >
           <MdEdit />
         </Button>
