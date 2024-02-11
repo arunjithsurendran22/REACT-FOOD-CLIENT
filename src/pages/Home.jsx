@@ -9,10 +9,9 @@ const Home = () => {
       <div>
         <HeroImage className="relative" />
       </div>
-      <div className="mt-10">
+      <div >
         <HomePageCategories />
       </div>
-
       <div>
         <Footer />
       </div>

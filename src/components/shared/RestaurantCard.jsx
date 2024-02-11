@@ -28,7 +28,7 @@ const RestaurantCard=()=> {
   };
 
   return (
-      <div className="container mx-auto mt-1 sm:mt-20">
+      <div className="container mx-auto  sm:mt-20">
         {loading ? (
           <p>Loading...</p>
         ) : (
@@ -46,7 +46,7 @@ const RestaurantCard=()=> {
                     className="w-full h-40 object-cover object-center"
                   />
                   <div className="p-4 h-36">
-                    <h2 className="text-gray-900 font-semibold text-lg mb-2">
+                    <h2 className="text-gray-900 font-semibold text-md mb-2">
                       {vendor.name}
                     </h2>
                     <p className="text-gray-600 text-sm mb-2">

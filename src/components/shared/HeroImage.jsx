@@ -4,7 +4,7 @@ import "../../components/shared/Style/style.css";
 
 export function HeroImage() {
   return (
-    <div className="bg-green-600 grid grid-cols-2 container mx-auto h-screen/1.25">
+    <div className="bg-green-600 grid grid-cols-2 container mx-auto  md:h-screen/1.25">
       <div className="flex flex-col justify-center text-2xl  md:font-extrabold md:text-4xl lg:text-5xl mx-auto hero-text">
         <h1>We believe good food</h1>
         <h1>Offers great smiles</h1>

@@ -14,7 +14,6 @@ const Address = () => {
       try {
         const response = await api.get("/profile/add-address/get");
         setAddresses(response.data.addresses);
-        toast.success("address deleted");
       } catch (error) {
         toast.error("failed to delete address");
         console.error("Failed to fetch addresses", error);

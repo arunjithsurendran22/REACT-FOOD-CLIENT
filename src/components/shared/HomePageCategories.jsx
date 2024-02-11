@@ -57,7 +57,7 @@ const HomePageCategories = () => {
       } else if (screenWidth < 1024) {
         setVisibleSlides(8);
       } else {
-        setVisibleSlides(8);
+        setVisibleSlides(10);
       }
     };
 
@@ -101,7 +101,7 @@ const HomePageCategories = () => {
               <img
                 src={category.image}
                 alt={category.title}
-                className="cursor-pointer w-40 shadow-md hover:shadow-xl transition duration-300"
+                className="cursor-pointer w-32   shadow-md hover:shadow-xl transition duration-300"
                 onClick={() => handleClick(category._id)}
               />
             </Slide>
@@ -119,7 +119,7 @@ const HomePageCategories = () => {
 
       {/* Category items */}
       <div>
-        <div className="grid grid-cols-2 mx-5 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8 mt-20 sm:mt-0">
+        <div className="grid grid-cols-2 mx-5 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8 mt-20 sm:mt-0 ">
           {selectedCategoryId &&
             categoriesData.map((vendor) => (
               <div
@@ -134,7 +134,7 @@ const HomePageCategories = () => {
                     className="w-full h-40 object-cover object-center"
                   />
                   <div className="p-4 h-36">
-                    <h2 className="text-gray-900 font-medium italic text-lg mb-2">
+                    <h2 className="text-gray-900  text-md font-bold mb-2">
                       {vendor.name}
                     </h2>
                     <p className="text-gray-600 text-sm mb-2">

@@ -34,7 +34,7 @@ const Navbar = () => {
   ];
 
   return (
-    <nav className="shadow-md p-4 fixed top-0 left-0 right-0 bg-white z-50">
+    <nav className="shadow-md p-1 md:p-4 fixed top-0 left-0 right-0 bg-white z-50">
       <div className="container mx-auto flex justify-between items-center">
         <div className="flex items-center">
           <span className="text-2xl font-bold text-gray-900">
