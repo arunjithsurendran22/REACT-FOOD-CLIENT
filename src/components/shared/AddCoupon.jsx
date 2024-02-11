@@ -1,7 +1,10 @@
-// AddCoupon.js
-
 import React, { useEffect, useState } from "react";
-import { Drawer, Button, Typography, IconButton } from "@material-tailwind/react";
+import {
+  Drawer,
+  Button,
+  Typography,
+  IconButton,
+} from "@material-tailwind/react";
 import api from "../authorization/api";
 import { useDispatch } from "react-redux";
 import { updateGrandTotal } from "../ReduxToolkit/cartReducer";
@@ -11,7 +14,6 @@ const AddCoupon = () => {
   const dispatch = useDispatch();
   const [openRight, setOpenRight] = useState(false);
   const [coupons, setCoupons] = useState([]);
-
   const openDrawerRight = () => setOpenRight(true);
   const closeDrawerRight = () => setOpenRight(false);
 
@@ -27,23 +29,19 @@ const AddCoupon = () => {
     };
     fetchCoupon();
   }, []);
-
+  
   const handleAddCoupon = async (couponId) => {
     try {
       const response = await api.post(
         `/products/coupon-list/apply-coupon/${couponId}`
       );
+      const { updatedCart } = response.data;
 
-      console.log(response.data);
       if (response.data.success) {
-        // Update grand total if coupon applied successfully
-        const { grandTotal } = response.data.updatedCart;
-        console.log(grandTotal);
-        dispatch(updateGrandTotal(grandTotal)); 
+        const { grandTotal } = updatedCart;
+        dispatch(updateGrandTotal(grandTotal));
         closeDrawerRight();
         toast.success("Coupon applied successfully");
-      } else {
-        toast.error("Failed to apply coupon");
       }
     } catch (error) {
       console.error("Error applying coupon:", error);
@@ -59,7 +57,7 @@ const AddCoupon = () => {
           onClick={openDrawerRight}
           className="shadow-md hover:shadow-lg transition duration-300"
         >
-          Open Drawer Right
+          Add Coupon
         </Button>
       </div>
       <Drawer
@@ -74,7 +72,7 @@ const AddCoupon = () => {
           </Typography>
           <IconButton
             variant="text"
-            color="blueGray"
+            color="blue-gray"
             onClick={closeDrawerRight}
           >
             <svg
@@ -94,9 +92,9 @@ const AddCoupon = () => {
           </IconButton>
         </div>
         <div className="space-y-4">
-          {coupons.map((coupon) => (
+          {coupons.map((coupon, index) => (
             <div
-              key={coupon._id}
+              key={index} // Using index as the key
               className="p-4 bg-white shadow-md rounded-md flex justify-between items-center"
             >
               <div>

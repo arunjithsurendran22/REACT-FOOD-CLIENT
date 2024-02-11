@@ -12,6 +12,7 @@ import Address from "./pages/Address";
 import Favourites from "./pages/Favourites";
 import Settings from "./pages/Settings";
 import VendorPage from "./pages/VendorPage";
+import NavbarBottom from "./components/shared/NavbarBottom";
 
 function App() {
   return (
@@ -22,7 +23,7 @@ function App() {
         <Route path="/cart" element={<Cart toast={toast} />} />
         <Route path="/register" element={<UserRegister />} />
         <Route path="/login" element={<UserLogin />} />
-        <Route path="/vendor-page/:vendorId" element={<VendorPage/>}/>
+        <Route path="/vendor-page/:vendorId" element={<VendorPage />} />
         <Route path="/profile" element={<Profile />}>
           <Route path="user-orders" element={<Orders />} />
           <Route path="user-address" element={<Address />} />
@@ -30,6 +31,8 @@ function App() {
           <Route path="settings" element={<Settings />} />
         </Route>
       </Routes>
+      <NavbarBottom/>
+      <ToastContainer />
     </Router>
   );
 }

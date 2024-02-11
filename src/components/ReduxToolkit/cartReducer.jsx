@@ -42,7 +42,6 @@ const cartSlice = createSlice({
     },
     updateGrandTotal: (state, action) => {
       state.grandTotal = action.payload; 
-      console.log(state.grandTotal);
     },
   },
 });

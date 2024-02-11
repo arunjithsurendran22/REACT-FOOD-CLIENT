@@ -45,3 +45,17 @@
     object-fit: cover;
   }
   
+  .mobile-view{
+    display: none;
+  }
+
+  @media screen and (max-width: 640px) {
+    .mobile-view{
+      display: block;
+      position: absolute;
+    }
+    .my-footer{
+      display: none;
+    }
+  
+  }

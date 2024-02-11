@@ -35,7 +35,6 @@ const Payment = ({ cartItem, totalToPay, vendorId }) => {
         setUserId(_id);
       } catch (error) {
         console.log("Failed to fetch user data:", error.message);
-        toast.error("Failed to fetch user data");
       }
     };
 

@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
 import api from "../components/authorization/api";
@@ -15,6 +15,8 @@ import AddCoupon from "../components/shared/AddCoupon";
 const Cart = () => {
   const dispatch = useDispatch();
   const cartItems = useSelector((state) => state.cart.cartItems);
+  const grandTotal = useSelector((state) => state.cart.grandTotal);
+  const [totalToPay, setTotalToPay] = useState(0);
 
   const items = cartItems.map((item) => item.vendorId);
   const vendorId = items.length > 0 ? items[0] : null;
@@ -24,8 +26,8 @@ const Cart = () => {
       try {
         const response = await api.get("/products/cart-items/get/list");
         dispatch(setCartItems(response.data.cart.products));
+        dispatch(updateGrandTotal(response.data.cart.grandTotal));
       } catch (error) {
-        toast.error("Failed to get cart items");
         console.error("Failed to get cart items:", error);
       }
     };
@@ -43,7 +45,6 @@ const Cart = () => {
       dispatch(updateGrandTotal(newGrandTotal));
     } catch (error) {
       console.error("Failed to update quantity:", error);
-      toast.error("Failed to update quantity");
     }
   };
 
@@ -65,20 +66,19 @@ const Cart = () => {
     );
   };
 
-  const itemTotal = cartItems.reduce(
-    (total, item) => total + item.price * item.quantity,
-    0
-  );
   const deliveryFee = 40;
   const tip = 0;
   const platformFee = 5;
   const gstAndCharges = 72;
 
-  const totalToPay =
-    itemTotal + deliveryFee + tip + platformFee + gstAndCharges;
+  useEffect(() => {
+    const newTotalToPay =
+      grandTotal + deliveryFee + tip + platformFee + gstAndCharges;
+    setTotalToPay(newTotalToPay);
+  }, [grandTotal, totalToPay]);
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-12 gap-4 mx-10 md:mx-32 mt-10 bg-gray-100 rounded my-device">
+    <div className="grid grid-cols-1 md:grid-cols-12 gap-4 mx-10 md:mx-32  bg-gray-100 rounded my-device mt-28">
       <div className="col-span-12 md:col-span-8 bg-white p-4 rounded-md shadow-md">
         <Payment
           cartItem={cartItems}
@@ -91,7 +91,7 @@ const Cart = () => {
         <h1 className="text-2xl font-bold mb-4">Shopping Cart</h1>
         {cartItems.map((item) => (
           <div
-            key={item.productId}
+            key={item._id}
             className="flex items-center justify-between bg-white p-4 mb-4 rounded shadow-md"
           >
             <div className="flex items-center">
@@ -151,36 +151,42 @@ const Cart = () => {
         {cartItems.length === 0 && (
           <p className="text-center">Your cart is empty.</p>
         )}
-        <AddCoupon />
+        {/* Render AddCoupon component only if there are items in the cart */}
+        {cartItems.length > 0 && <AddCoupon />}
         <div className="mt-8 italic">
-          <h2 className="text-xl font-bold mb-4">Bill Details</h2>
-          <div className="flex justify-between mb-2">
-            <p>Item Total</p>
-            <p>₹{itemTotal.toFixed(2)}</p>
-          </div>
-          <div className="flex justify-between mb-2">
-            <p>Delivery Fee | 3.0 kms</p>
-            <p>₹{deliveryFee.toFixed(2)}</p>
-          </div>
-          <div className="flex justify-between mb-2">
-            <p>Delivery Tip</p>
-            <p>₹{tip.toFixed(2)}</p>
-          </div>
-          <div className="flex justify-between mb-2">
-            <p>Platform Fee</p>
-            <p>₹{platformFee.toFixed(2)}</p>
-          </div>
-          <div className="flex justify-between mb-2">
-            <p>GST and Restaurant Charges</p>
-            <p>₹{gstAndCharges.toFixed(2)}</p>
-          </div>
-          <hr className="my-4 border-t border-gray-300" />
-          <div className="flex justify-between mt-4">
-            <p className="text-xl font-bold text-red-900">TO PAY</p>
-            <p className="text-xl font-bold text-red-900">
-              ₹ {totalToPay.toFixed(2)}
-            </p>
-          </div>
+          {/* Render "Bill Details" section only if there are items in the cart */}
+          {cartItems.length > 0 && (
+            <>
+              <h2 className="text-xl font-bold mb-4">Bill Details</h2>
+              <div className="flex justify-between mb-2">
+                <p>Item Total</p>
+                <p>₹{grandTotal}</p>
+              </div>
+              <div className="flex justify-between mb-2">
+                <p>Delivery Fee | 3.0 kms</p>
+                <p>₹{deliveryFee.toFixed(2)}</p>
+              </div>
+              <div className="flex justify-between mb-2">
+                <p>Delivery Tip</p>
+                <p>₹{tip.toFixed(2)}</p>
+              </div>
+              <div className="flex justify-between mb-2">
+                <p>Platform Fee</p>
+                <p>₹{platformFee.toFixed(2)}</p>
+              </div>
+              <div className="flex justify-between mb-2">
+                <p>GST and Restaurant Charges</p>
+                <p>₹{gstAndCharges.toFixed(2)}</p>
+              </div>
+              <hr className="my-4 border-t border-gray-300" />
+              <div className="flex justify-between mt-4">
+                <p className="text-xl font-bold text-red-900">TO PAY</p>
+                <p className="text-xl font-bold text-red-900">
+                  ₹ {totalToPay.toFixed(2)}
+                </p>
+              </div>
+            </>
+          )}
         </div>
       </div>
     </div>

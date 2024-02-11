@@ -22,7 +22,6 @@ const ProfileHeader = () => {
         setIsLoggedIn(true); // Set login status to true after fetching profile
       } catch (error) {
         console.error("Failed to fetch profile", error);
-        toast.error("Failed to fetch profile");
         setIsLoggedIn(false); // Set login status to false if there's an error
       }
     };

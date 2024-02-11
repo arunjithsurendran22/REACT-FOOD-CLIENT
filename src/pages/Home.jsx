@@ -12,8 +12,9 @@ const Home = () => {
       <div className="mt-10">
         <HomePageCategories />
       </div>
+
       <div>
-        <Footer/>
+        <Footer />
       </div>
     </div>
   );
