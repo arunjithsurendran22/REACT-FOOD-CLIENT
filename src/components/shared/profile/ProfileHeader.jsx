@@ -46,7 +46,7 @@ const ProfileHeader = () => {
   return (
     <div className="">
       <div className="">
-        <div className="flex justify-between items-center px-10 py-5 shadow-lg rounded-lg border border-b-gray-200 bg-white">
+        <div className="flex justify-between items-center px-10 py-3 md:py-5 shadow-lg rounded-lg border border-b-gray-200 bg-white">
           <div className="flex justify-between w-72 items-center">
             <img
               src={profile.image || placeholderImage}

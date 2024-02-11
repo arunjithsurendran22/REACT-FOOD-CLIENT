@@ -6,7 +6,7 @@ const Profile = () => {
   
   return (
     <div className="">
-      <div className="container mx-auto h-dvh mt-28">
+      <div className="container mx-auto h-dvh mt-16 md:mt-28">
         <ProfileHeader />
         <div className="flex flex-row my-10">
           <ProfileSideBar />

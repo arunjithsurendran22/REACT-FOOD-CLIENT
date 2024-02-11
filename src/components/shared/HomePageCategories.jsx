@@ -119,7 +119,7 @@ const HomePageCategories = () => {
 
       {/* Category items */}
       <div>
-        <div className="grid grid-cols-2 mx-5 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8 mt-20 sm:mt-0 ">
+        <div className="grid grid-cols-2 mx-5 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8 mt-20 ">
           {selectedCategoryId &&
             categoriesData.map((vendor) => (
               <div

@@ -10,7 +10,7 @@ import { useDispatch } from "react-redux";
 import { updateGrandTotal } from "../ReduxToolkit/cartReducer";
 import { toast } from "react-toastify";
 
-const AddCoupon = () => {
+const AddCoupon = ({ refreshCart }) => {
   const dispatch = useDispatch();
   const [openRight, setOpenRight] = useState(false);
   const [coupons, setCoupons] = useState([]);
@@ -29,7 +29,7 @@ const AddCoupon = () => {
     };
     fetchCoupon();
   }, []);
-  
+
   const handleAddCoupon = async (couponId) => {
     try {
       const response = await api.post(
@@ -40,12 +40,14 @@ const AddCoupon = () => {
       if (response.data.success) {
         const { grandTotal } = updatedCart;
         dispatch(updateGrandTotal(grandTotal));
-        closeDrawerRight();
         toast.success("Coupon applied successfully");
+        refreshCart();
       }
     } catch (error) {
       console.error("Error applying coupon:", error);
       toast.error("Failed to apply coupon");
+    } finally {
+      closeDrawerRight(); 
     }
   };
 

@@ -31,7 +31,7 @@ const ProfileSideBar = () => {
   const data = [
     {
       label: "Orders",
-      link: "user-orders",
+      link: "/profile",
     },
     {
       label: "Address",

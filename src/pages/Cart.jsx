@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
 import api from "../components/authorization/api";
@@ -16,7 +16,6 @@ const Cart = () => {
   const dispatch = useDispatch();
   const cartItems = useSelector((state) => state.cart.cartItems);
   const grandTotal = useSelector((state) => state.cart.grandTotal);
-  const [totalToPay, setTotalToPay] = useState(0);
 
   const items = cartItems.map((item) => item.vendorId);
   const vendorId = items.length > 0 ? items[0] : null;
@@ -35,35 +34,46 @@ const Cart = () => {
     fetchCartItemsFromApi();
   }, [dispatch]);
 
-  const handleUpdateQuantity = async (Id, newQuantity) => {
+  const handleUpdateQuantity = async (itemId, newQuantity) => {
     try {
-      await api.put(`/products/add-to-cart/update/${Id}`, {
+      await api.put(`/products/add-to-cart/update/${itemId}`, {
         quantity: newQuantity,
       });
-      dispatch(updateCartItemQuantity({ itemId: Id, newQuantity }));
-      const newGrandTotal = calculateGrandTotal();
-      dispatch(updateGrandTotal(newGrandTotal));
+      dispatch(updateCartItemQuantity({ itemId, newQuantity }));
+
+      // Recalculate total after updating quantity
+      const response = await api.get("/products/cart-items/get/list");
+      dispatch(setCartItems(response.data.cart.products));
+      dispatch(updateGrandTotal(response.data.cart.grandTotal));
     } catch (error) {
       console.error("Failed to update quantity:", error);
     }
   };
 
-  const handleRemoveItem = async (Id) => {
+  const handleRemoveItem = async (itemId) => {
     try {
-      await api.delete(`/products/cart-items-delete/${Id}`);
-      dispatch(removeCartItem(Id));
-      const newGrandTotal = calculateGrandTotal();
-      dispatch(updateGrandTotal(newGrandTotal));
+      await api.delete(`/products/cart-items-delete/${itemId}`);
+      dispatch(removeCartItem(itemId));
+
+      // Recalculate total after removing item
+      const response = await api.get("/products/cart-items/get/list");
+      dispatch(setCartItems(response.data.cart.products));
+      dispatch(updateGrandTotal(response.data.cart.grandTotal));
     } catch (error) {
       console.log("Failed to delete item");
     }
   };
 
-  const calculateGrandTotal = () => {
-    return cartItems.reduce(
-      (total, item) => total + item.price * item.quantity,
-      0
-    );
+  // Callback function to refresh cart after applying coupon
+  const refreshCart = async () => {
+    try {
+      const response = await api.get("/products/cart-items/get/list");
+      dispatch(setCartItems(response.data.cart.products)); // Update cart items
+      dispatch(updateGrandTotal(response.data.cart.grandTotal)); // Update grand total
+      console.log("im on");
+    } catch (error) {
+      console.error("Failed to get cart items:", error);
+    }
   };
 
   const deliveryFee = 40;
@@ -71,21 +81,20 @@ const Cart = () => {
   const platformFee = 5;
   const gstAndCharges = 72;
 
-  useEffect(() => {
-    const newTotalToPay =
-      grandTotal + deliveryFee + tip + platformFee + gstAndCharges;
-    setTotalToPay(newTotalToPay);
-  }, [grandTotal, totalToPay]);
+  const totalToPay =
+    grandTotal + deliveryFee + tip + platformFee + gstAndCharges;
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-12 gap-4 mx-10 md:mx-32  bg-gray-100 rounded my-device mt-28">
-      <div className="col-span-12 md:col-span-8 bg-white p-4 rounded-md shadow-md">
-        <Payment
-          cartItem={cartItems}
-          totalToPay={totalToPay}
-          vendorId={vendorId}
-        />
-      </div>
+    <div className="grid grid-cols-1 md:grid-cols-12 gap-4 mx-10 md:mx-32 bg-gray-100 rounded my-device mt-28">
+      {cartItems && (
+        <div className="col-span-12 md:col-span-8 bg-white p-4 rounded-md shadow-md">
+          <Payment
+            cartItems={cartItems}
+            totalToPay={totalToPay}
+            vendorId={vendorId}
+          />
+        </div>
+      )}
 
       <div className="col-span-12 md:col-span-4 bg-white p-4 rounded-md shadow-md">
         <h1 className="text-2xl font-bold mb-4">Shopping Cart</h1>
@@ -152,7 +161,7 @@ const Cart = () => {
           <p className="text-center">Your cart is empty.</p>
         )}
         {/* Render AddCoupon component only if there are items in the cart */}
-        {cartItems.length > 0 && <AddCoupon />}
+        {cartItems.length > 0 && <AddCoupon refreshCart={refreshCart} />}
         <div className="mt-8 italic">
           {/* Render "Bill Details" section only if there are items in the cart */}
           {cartItems.length > 0 && (

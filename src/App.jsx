@@ -27,7 +27,7 @@ function App() {
         <Route path="/login" element={<UserLogin />} />
         <Route path="/vendor-page/:vendorId" element={<VendorPage />} />
         <Route path="/profile" element={<Profile />}>
-          <Route path="user-orders" element={<Orders />} />
+          <Route index element={<Orders />} />
           <Route path="user-address" element={<Address />} />
           <Route path="user-favourites" element={<Favourites />} />
           <Route path="settings" element={<Settings />} />

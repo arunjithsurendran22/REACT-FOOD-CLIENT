@@ -6,10 +6,10 @@ import Footer from "../components/shared/Footer";
 const Home = () => {
   return (
     <div className="relative">
-      <div>
+      <div className="">
         <HeroImage className="relative" />
       </div>
-      <div >
+      <div className="mt-20">
         <HomePageCategories />
       </div>
       <div>
