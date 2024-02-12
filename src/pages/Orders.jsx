@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import api from "../components/authorization/api";
-import { Rating } from "@material-tailwind/react";
-import ProductRatingForm from "../components/shared/ProductRatingForm";
+import ProductRatingForm from "../components/shared/ProductRating"
+
 
 const Orders = () => {
   const [orderDetails, setOrderDetails] = useState([]);
@@ -61,17 +61,19 @@ const Orders = () => {
                     </p>
                   </div>
                 </div>
+                {order.status === "Delivered" && (
+                  <ProductRatingForm
+                    key={product._id}
+                    productId={product.productId}
+                    vendorId={product.vendorId}
+                  />
+                )}
               </div>
             ))}
           </div>
           <p className="text-red-700 font-normal text-md italic mt-4">
             Total: ₹{order.totalAmount}
-            {order.status === "Delivered" ? (
-              <ProductRatingForm
-                userId={order.userId}
-                productId={order.products.productId}
-              />
-            ) : (
+            {order.status !== "Delivered" && (
               <button
                 onClick={() => handleCancelOrder(order.orderId)}
                 className="bg-green-500 text-white px-4 py-1 rounded hover:bg-red-900 focus:outline-none transform transition-transform w-full mt-5"

@@ -6,7 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { setAddress, selectAddress } from "../ReduxToolkit/addressSlice";
 import AddAddressModal from "../shared/AddAddressModal";
 
-const Payment = ({ cartItem, totalToPay, vendorId }) => {
+const Payment = ({ cartItems, totalToPay, vendorId }) => {
   const dispatch = useDispatch();
   const selectedAddress = useSelector(selectAddress);
 
@@ -135,7 +135,7 @@ const Payment = ({ cartItem, totalToPay, vendorId }) => {
               userId,
               vendorId,
               address: selectedAddress,
-              cartItem,
+              cartItems,
               totalToPay,
             };
             console.log("paymentDetails", paymentDetails);

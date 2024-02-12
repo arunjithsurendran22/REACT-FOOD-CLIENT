@@ -34,15 +34,29 @@ function UserLogin() {
     if (validateForm()) {
       try {
         const response = await api.post("/profile/login", formData);
-        toast.success("Login Successfully");
-        handleLoginToken(response.data);
-        navigate("/");
+        console.log(response.data);
+        if (response.data.message === "User Login successful") {
+          toast.success("Login Successfully");
+          handleLoginToken(response.data);
+          navigate("/");
+        } else {
+          toast.error(response.data.message);
+          setFormData("")
+        }
       } catch (error) {
-        console.log("Login failed", error.response.data);
-        toast.error("Login failed");
+        if (
+          error.response &&
+          error.response.data &&
+          error.response.data.message
+        ) {
+          toast.error(error.response.data.message);
+        } else {
+          toast.error("Login failed. Please try again.");
+        }
       }
     }
   };
+  
 
   return (
     <div className="max-w-lg mx-auto p-4">
@@ -70,7 +84,9 @@ function UserLogin() {
             }`}
             onChange={handleChange}
           />
-          {errors.password && <span className="text-red-500">{errors.password}</span>}
+          {errors.password && (
+            <span className="text-red-500">{errors.password}</span>
+          )}
           <button
             type="submit"
             className="bg-gray-800 text-cyan-50 p-3 my-6 rounded-xl shadow-inner text-xl font-bold hover:opacity-90"

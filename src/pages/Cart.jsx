@@ -17,6 +17,8 @@ const Cart = () => {
   const cartItems = useSelector((state) => state.cart.cartItems);
   const grandTotal = useSelector((state) => state.cart.grandTotal);
 
+  console.log("cartItems in cart",cartItems);
+
   const items = cartItems.map((item) => item.vendorId);
   const vendorId = items.length > 0 ? items[0] : null;
 
