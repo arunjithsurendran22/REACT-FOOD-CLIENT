@@ -4,7 +4,6 @@ import api from "../components/authorization/api";
 import { FaPlus, FaTimes } from "react-icons/fa"; // Import the plus and times icons from react-icons library
 import { toast } from "react-toastify";
 
-
 const Address = () => {
   const [addresses, setAddresses] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -53,10 +52,10 @@ const Address = () => {
       {addresses.map((address) => (
         <div
           key={address._id}
-          className="relative max-w-sm mx-4 mb-8 bg-white rounded shadow-md p-6 w-72 border border-gray-300"
+          className="relative max-w-sm mx-4 mb-8 bg-white rounded shadow-md p-4 w-72 border border-gray-300"
         >
           <button
-            className="absolute top-0 right-0 mt-2 mr-2 p-2 rounded-full bg-red-500 text-white focus:outline-none"
+            className="absolute top-0 right-0 mt-2 mr-2 p-2  rounded-full bg-red-500 text-white focus:outline-none"
             onClick={() => handleDeleteAddress(address._id)}
           >
             <FaTimes />
