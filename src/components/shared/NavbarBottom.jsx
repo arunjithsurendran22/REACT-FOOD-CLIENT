@@ -35,14 +35,7 @@ const NavbarBottom = () => {
           <AiOutlineHome />
         </button>
       </Link>
-      <Link
-        to="/notifications"
-        className="hover:text-red-500 transition duration-300"
-      >
-        <button className="focus:outline-none">
-          <IoMdNotificationsOutline />
-        </button>
-      </Link>
+      
       <Link to="/profile">
         <button className="hover:text-red-500 transition duration-300">
           <MdOutlineAccountCircle />
