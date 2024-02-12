@@ -1,4 +1,4 @@
-import { useDispatch } from 'react-redux';
+import { useDispatch } from "react-redux";
 import { useState, useEffect } from "react";
 import { toast } from "react-toastify";
 import api from "../authorization/api";
@@ -13,10 +13,7 @@ import "pure-react-carousel/dist/react-carousel.es.css";
 import { FaArrowUp, FaArrowDown } from "react-icons/fa";
 import { addToCart } from "../ReduxToolkit/cartReducer";
 
-
-
 const Categories = ({ vendorId }) => {
-
   const dispatch = useDispatch();
   const [categories, setCategories] = useState([]);
   const [categoryId, setCategoryId] = useState("");
@@ -78,17 +75,17 @@ const Categories = ({ vendorId }) => {
     };
   }, []);
 
-  const handleNext = () => {
-    setActiveIndex((prevIndex) =>
-      prevIndex === categories.length - 1 ? 0 : prevIndex + 1
-    );
-  };
+  // const handleNext = () => {
+  //   setActiveIndex((prevIndex) =>
+  //     prevIndex === categories.length - 1 ? 0 : prevIndex + 1
+  //   );
+  // };
 
-  const handleBack = () => {
-    setActiveIndex((prevIndex) =>
-      prevIndex === 0 ? categories.length - 1 : prevIndex - 1
-    );
-  };
+  // const handleBack = () => {
+  //   setActiveIndex((prevIndex) =>
+  //     prevIndex === 0 ? categories.length - 1 : prevIndex - 1
+  //   );
+  // };
 
   const handleCategoryId = (Id) => {
     setCategoryId(Id);
@@ -120,7 +117,7 @@ const Categories = ({ vendorId }) => {
     <div className="container mx-auto p-4">
       <CarouselProvider
         naturalSlideWidth={100}
-        naturalSlideHeight={125}
+        naturalSlideHeight={110}
         totalSlides={categories.length}
         visibleSlides={visibleSlides}
         currentSlide={activeIndex}
@@ -138,49 +135,48 @@ const Categories = ({ vendorId }) => {
             </Slide>
           ))}
         </Slider>
-        <ButtonBack onClick={handleBack}>Back</ButtonBack>
-        <ButtonNext onClick={handleNext}>Next</ButtonNext>
+        {/* <ButtonBack onClick={handleBack}>Back</ButtonBack>
+        <ButtonNext onClick={handleNext}>Next</ButtonNext> */}
       </CarouselProvider>
       <div className="flex justify-between mt-4">
         <button
-          className="flex items-center bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-700 focus:outline-none"
+          className="flex items-center bg-gray-800 text-white px-4 py-2 rounded-3xl hover:bg-green-700 focus:outline-none"
           onClick={() => handleSort("lowToHigh")}
         >
           Low to High
           {sortBy === "lowToHigh" && <FaArrowUp className="ml-2" />}
         </button>
         <button
-          className="flex items-center bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-700 focus:outline-none"
+          className="flex items-center bg-gray-800  text-white px-4 py-2 rounded-3xl hover:bg-green-700 focus:outline-none"
           onClick={() => handleSort("highToLow")}
         >
           High to Low
           {sortBy === "highToLow" && <FaArrowDown className="ml-2" />}
         </button>
       </div>
-      <div className="flex flex-wrap -mx-2 md:-mx-4 mt-4">
+      <div className="grid grid-cols-2 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 mx-auto">
         {(showAllProducts ? allProducts : products).map((product) => (
-          <div
-            key={product._id}
-            className="w-full md:w-1/2 lg:w-1/4 px-2 md:px-4 mb-8 mx-10 md:mx-0"
-          >
-            <div className="bg-white  rounded-lg  transform transition duration-300 hover:scale-105 hover:shadow-lg my-5">
+          <div key={product._id} className="">
+            <div className="bg-white  h-96 rounded-lg  transform transition duration-300 hover:scale-105 hover:shadow-lg my-5">
               <img
                 src={product.image}
                 alt={product.productTitle}
-                className="w-full object-cover mb-4 rounded-t-md"
+                className="w-full h-52 object-fill  rounded-t-md "
               />
-              <div className="px-3 pb-5">
-                <p className="text-lg font-bold text-gray-800 mb-2">
+              <div className="px-2 h-24">
+                <p className="text-sm font-bold text-gray-800 mb-2">
                   {product.productTitle}
                 </p>
-                <p className="text-gray-600 mb-4">{product.description}</p>
-                <p className="text-green-800 font-bold text-xl">
-                  ₹{product.price}
+                <p className="text-gray-600 mb-4 italic text-sm">
+                  {product.description}
                 </p>
               </div>
-              <div className="mx-6">
+              <div className="h-20 mx-4">
+                <p className="text-gray-700 font-extrabold text-md">
+                  ₹{product.price}
+                </p>
                 <button
-                  className="bg-red-500 text-white  py-2 mb-5  rounded hover:bg-red-700 focus:outline-none mt-4 transition duration-300  w-full "
+                  className=" text-white  py-1  bg-green-300 rounded hover:bg-red-700 focus:outline-none mt-4 transition duration-300  w-full "
                   onClick={() => handleAddToCart(product._id)}
                 >
                   Add to Cart

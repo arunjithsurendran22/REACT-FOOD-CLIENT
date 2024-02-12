@@ -1,15 +1,7 @@
-import axios from "axios";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { IoLocation } from "react-icons/io5";
-import {
-  Card,
-  CardHeader,
-  CardBody,
-  CardFooter,
-  Typography,
-  Button,
-} from "@material-tailwind/react";
+import { Typography } from "@material-tailwind/react";
 import Categories from "../components/shared/Categories";
 import api from "../components/authorization/api";
 
@@ -33,13 +25,13 @@ const VendorPage = () => {
     <>
       <div>
         {vendorData.address && (
-          <figure className="relative h-96 w-full container mx-auto mt-20 ">
+          <figure className="relative h-80  w-full container mx-auto mt-20">
             <img
-              className="h-full w-full rounded-xl object-cover object-center transition duration-300 ease-in-out transform hover:scale-105"
+              className="h-full w-full rounded-3xl object-cover object-center transition duration-300 ease-in-out transform hover:scale-105"
               src={vendorData.backgroundImage}
               alt={vendorData.name}
             />
-            <figcaption className="absolute bottom-8 left-2/4 flex w-[calc(100%-4rem)] -translate-x-2/4 justify-between rounded-xl border border-white bg-white/75 py-4 px-6 shadow-lg shadow-black/5 saturate-200 backdrop-blur-sm transition duration-300 ease-in-out hover:shadow-xl">
+            <figcaption className="absolute bottom-8 left-2/4 flex w-[calc(100%-4rem)] -translate-x-2/4 justify-between rounded-xl border border-white bg-white/30 py-4 px-6 shadow-lg shadow-black/5 saturate-200 backdrop-blur-sm transition duration-300 ease-in-out hover:shadow-xl">
               <div>
                 <Typography
                   variant="h5"
@@ -52,8 +44,10 @@ const VendorPage = () => {
                     className="w-16 mr-5 rounded-full shadow-lg transition duration-300 ease-in-out transform hover:-translate-y-[-4px]"
                   />
                   <div className="flex flex-col">
-                    <Typography variant="h5">{vendorData.name}</Typography>
-                    <Typography color="gray">
+                    <Typography variant="h6" className="italic">
+                      {vendorData.name}
+                    </Typography>
+                    <Typography color="" className="text-sm">
                       <IoLocation />
                       {`${vendorData.address.street}, ${vendorData.address.city}`}
                     </Typography>
@@ -64,7 +58,7 @@ const VendorPage = () => {
                 {vendorData.workingHours &&
                   vendorData.workingHours.length > 0 &&
                   vendorData.workingHours.map((day) => (
-                    <Typography key={day.day} color="gray">
+                    <Typography key={day.day} className="text-sm font-medium">
                       {`${day.day}: ${day.openingHours}${day.openingState} - ${day.closingHours}${day.closingState}`}
                     </Typography>
                   ))}
