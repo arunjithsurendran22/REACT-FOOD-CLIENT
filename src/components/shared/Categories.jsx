@@ -94,9 +94,14 @@ const Categories = ({ vendorId }) => {
   };
 
   const handleAddToCart = async (productId) => {
-    await api.post(`/products/add-to-cart/create/${productId}/${vendorId}`);
-    dispatch(addToCart({ _id: productId, quantity: 1 }));
-    toast.success("added to cart");
+    try{
+      await api.post(`/products/add-to-cart/create/${productId}/${vendorId}`);
+      dispatch(addToCart({ _id: productId, quantity: 1 }));
+      toast.success("added to cart");
+    }catch(error){
+      console.log("failed to add cart");
+    }
+   
   };
 
   const handleSort = (sortType) => {

@@ -73,7 +73,7 @@ const ProfileSideBar = () => {
       </div>
       <div className="my-div w-16 h-16">
         <div className="h-72 w-16 static " id="speed-dial">
-          <div className="absolute top-20 left-4">
+          <div className="absolute top-15 left-4">
             <SpeedDial>
               <SpeedDialHandler>
                 <IconButton size="lg" className="rounded-full bg-gray-900">
