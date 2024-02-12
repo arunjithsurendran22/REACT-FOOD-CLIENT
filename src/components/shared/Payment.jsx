@@ -193,7 +193,7 @@ const Payment = ({ cartItem, totalToPay, vendorId }) => {
   };
 
   return (
-    <div className="flex flex-col justify-between">
+    <div className="flex flex-col justify-between ">
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
         {/* Empty box for adding a new address */}
         <div className="p-4 bg-white rounded-md shadow-md flex items-center justify-center">

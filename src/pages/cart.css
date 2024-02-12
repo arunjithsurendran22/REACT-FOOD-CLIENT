@@ -26,7 +26,7 @@
     /* Styles for smaller screens */
     .my-device {
         display: flex;
-        flex-direction: column;
+        flex-direction: column;       
         
     }
 

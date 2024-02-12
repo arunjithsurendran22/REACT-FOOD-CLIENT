@@ -29,13 +29,13 @@ const Orders = () => {
   };
 
   return (
-    <div className="grid grid-cols-1  md:grid-cols-2 lg:grid-cols-3 lg:gap-4 gap-4 mx-20 sm:mx-0 ">
+    <div className="grid grid-cols-1  md:grid-cols-2 lg:grid-cols-3 lg:gap-4 gap-4 mx-20 sm:mx-0 mb-20">
       {orderDetails.map((order) => (
         <div
           key={order._id}
           className="bg-white p-3 rounded-lg shadow-md hover:shadow-lg transition duration-300 relative border border-gray-300 "
         >
-          <h3 className="text-xl font-light">{order.orderId}</h3>
+          <h3 className="text-sm font-light">{order.orderId}</h3>
           <div className="flex justify-between mb-4">
             <div className="text-sm text-gray-500 mt-3">
               {new Date(order.createdAt).toLocaleDateString()}
@@ -53,18 +53,18 @@ const Orders = () => {
                     className="w-16 h-16 object-cover mb-2 rounded-full shadow-md"
                   />
                   <div>
-                    <p className="text-sm font-bold text-gray-800 mb-2 mx-6">
+                    <p className="text-sm font-bold text-gray-500 mb-2 mx-6">
                       {product.productTitle}
                     </p>
-                    <p className="text-green-700 font-bold mx-6">
-                      Price: ₹{product.price}
+                    <p className="text-green-700  font-bold mx-6">
+                      Price ₹{product.price}
                     </p>
                   </div>
                 </div>
               </div>
             ))}
           </div>
-          <p className="text-red-700 font-normal text-xl mt-4">
+          <p className="text-red-700 font-normal text-md italic mt-4">
             Total: ₹{order.totalAmount}
             {order.status === "Delivered" ? (
               <ProductRatingForm
