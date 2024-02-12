@@ -53,7 +53,7 @@ const Orders = () => {
                     className="w-16 h-16 object-cover mb-2 rounded-full shadow-md"
                   />
                   <div>
-                    <p className="text-sm font-bold text-gray-500 mb-2 mx-6">
+                    <p className="text-sm font-bold text-gray-500 mb-2 mx-6 product-title">
                       {product.productTitle}
                     </p>
                     <p className="text-green-700  font-bold mx-6">

@@ -73,16 +73,16 @@ const ProfileSideBar = () => {
       </div>
       <div className="my-div w-16 h-16">
         <div className="h-72 w-16 static " id="speed-dial">
-          <div className="absolute top-24 left-0">
+          <div className="absolute top-20 left-4">
             <SpeedDial>
               <SpeedDialHandler>
-                <IconButton size="lg" className="rounded-full">
+                <IconButton size="lg" className="rounded-full bg-gray-900">
                   <PlusIcon className="h-5 w-5 transition-transform group-hover:rotate-45" />
                 </IconButton>
               </SpeedDialHandler>
               <SpeedDialContent>
                 <Link to="/profile/user-orders">
-                  <SpeedDialAction className="h-16 w-16">
+                  <SpeedDialAction className="h-16 w-16 bg-gray-600">
                     <MdRestaurantMenu className="h-5 w-5" />
                     <Typography
                       color="blue-gray"
@@ -93,7 +93,7 @@ const ProfileSideBar = () => {
                   </SpeedDialAction>
                 </Link>
                 <Link to="/profile/user-address">
-                  <SpeedDialAction className="h-16 w-16">
+                  <SpeedDialAction className="h-16 w-16 bg-gray-500">
                     <FaAddressCard className="h-4 w-5" />
                     <Typography
                       color="blue-gray"
@@ -104,7 +104,7 @@ const ProfileSideBar = () => {
                   </SpeedDialAction>
                 </Link>
                 <Link to="/profile/user-favourites">
-                  <SpeedDialAction className="h-16 w-16">
+                  <SpeedDialAction className="h-16 w-16 bg-gray-400">
                     <MdFavorite className="h-5 w-5" />
                     <Typography
                       color="blue-gray"
@@ -115,7 +115,7 @@ const ProfileSideBar = () => {
                   </SpeedDialAction>
                 </Link>
                 <Link to="/profile/settings">
-                  <SpeedDialAction className="h-16 w-16">
+                  <SpeedDialAction className="h-16 w-16 bg-gray-300">
                     <CiSettings className="h-5 w-5" />
                     <Typography
                       color="blue-gray"
