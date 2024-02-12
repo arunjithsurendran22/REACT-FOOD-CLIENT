@@ -57,5 +57,12 @@
     .my-footer{
       display: none;
     }
+    .description{
+      font-size: 10px;
+    }
+    .product-title{
+      font-size: 14px;
+    }
   
   }
+

@@ -12,6 +12,7 @@ import {
 import "pure-react-carousel/dist/react-carousel.es.css";
 import { FaArrowUp, FaArrowDown } from "react-icons/fa";
 import { addToCart } from "../ReduxToolkit/cartReducer";
+import "./styles.css"
 
 const Categories = ({ vendorId }) => {
   const dispatch = useDispatch();
@@ -154,20 +155,20 @@ const Categories = ({ vendorId }) => {
           {sortBy === "highToLow" && <FaArrowDown className="ml-2" />}
         </button>
       </div>
-      <div className="grid grid-cols-2 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 mx-auto">
+      <div className="grid grid-cols-2 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 mx-auto mb-20">
         {(showAllProducts ? allProducts : products).map((product) => (
           <div key={product._id} className="">
-            <div className="bg-white  h-96 rounded-lg  transform transition duration-300 hover:scale-105 hover:shadow-lg my-5">
+            <div className="bg-white  h-96 rounded-lg  transform transition duration-300 hover:scale-105 hover:shadow-lg my-5 border border-gray-300">
               <img
                 src={product.image}
                 alt={product.productTitle}
                 className="w-full h-52 object-fill  rounded-t-md "
               />
               <div className="px-2 h-24">
-                <p className="text-sm font-bold text-gray-800 mb-2">
+                <p className="md:text-sm font-bold text-gray-800 mb-2 product-title">
                   {product.productTitle}
                 </p>
-                <p className="text-gray-600 mb-4 italic text-sm">
+                <p className="text-gray-600 mb-4 italic md:text-sm description">
                   {product.description}
                 </p>
               </div>

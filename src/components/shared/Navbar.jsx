@@ -38,11 +38,13 @@ const Navbar = () => {
       <div className="container mx-auto flex justify-between items-center">
         <div className="flex items-center">
           <span className="text-2xl font-bold text-gray-900">
-            <img
-              src="https://i.pinimg.com/originals/72/7e/f7/727ef7286f28b289fd1188eefdd2b626.jpg"
-              alt=""
-              className="w-10"
-            />
+            <Link to="/">
+              <img
+                src="https://i.pinimg.com/originals/72/7e/f7/727ef7286f28b289fd1188eefdd2b626.jpg"
+                alt=""
+                className="w-10"
+              />
+            </Link>
           </span>
         </div>
 
