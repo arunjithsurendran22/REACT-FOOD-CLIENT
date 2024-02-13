@@ -1,4 +1,6 @@
+// import React, { useEffect, useState } from "react";
 import React, { useEffect, useState } from "react";
+// import { useDispatch, useSelector } from "react-redux";
 import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
 import api from "../components/authorization/api";
@@ -11,13 +13,19 @@ import {
 } from "../components/ReduxToolkit/cartReducer";
 import "./cart.css";
 import AddCoupon from "../components/shared/AddCoupon";
+import {
+  Menu,
+  MenuHandler,
+  Button,
+  MenuList,
+  MenuItem,
+} from "@material-tailwind/react";
 
 const Cart = () => {
   const dispatch = useDispatch();
   const cartItems = useSelector((state) => state.cart.cartItems);
   const grandTotal = useSelector((state) => state.cart.grandTotal);
-
-  console.log("cartItems in cart",cartItems);
+  const [coupons, setCoupons] = useState([]);
 
   const items = cartItems.map((item) => item.vendorId);
   const vendorId = items.length > 0 ? items[0] : null;
@@ -35,6 +43,39 @@ const Cart = () => {
 
     fetchCartItemsFromApi();
   }, [dispatch]);
+
+  useEffect(() => {
+    const fetchCoupon = async () => {
+      try {
+        const response = await api.get("/products/coupon-list/get");
+        setCoupons(response.data.coupons);
+      } catch (error) {
+        console.error("Failed to get coupons:", error);
+        toast.error("Failed to get coupons");
+      }
+    };
+    fetchCoupon();
+  }, []);
+
+  const handleAddCoupon = async (couponId) => {
+    try {
+      const response = await api.post(
+        `/products/coupon-list/apply-coupon/${couponId}`
+      );
+      const { updatedCart } = response.data;
+
+      if (response.data.success) {
+        const { grandTotal } = updatedCart;
+        dispatch(updateGrandTotal(grandTotal));
+        toast.success("Coupon applied successfully");
+      }
+      const newResponse = await api.get("/products/cart-items/get/list");
+        dispatch(updateGrandTotal(newResponse.data.cart.grandTotal));
+    } catch (error) {
+      console.error("Error applying coupon:", error);
+      toast.error("Failed to apply coupon");
+    }
+  };
 
   const handleUpdateQuantity = async (itemId, newQuantity) => {
     try {
@@ -63,18 +104,6 @@ const Cart = () => {
       dispatch(updateGrandTotal(response.data.cart.grandTotal));
     } catch (error) {
       console.log("Failed to delete item");
-    }
-  };
-
-  // Callback function to refresh cart after applying coupon
-  const refreshCart = async () => {
-    try {
-      const response = await api.get("/products/cart-items/get/list");
-      dispatch(setCartItems(response.data.cart.products)); // Update cart items
-      dispatch(updateGrandTotal(response.data.cart.grandTotal)); // Update grand total
-      console.log("im on");
-    } catch (error) {
-      console.error("Failed to get cart items:", error);
     }
   };
 
@@ -163,7 +192,23 @@ const Cart = () => {
           <p className="text-center">Your cart is empty.</p>
         )}
         {/* Render AddCoupon component only if there are items in the cart */}
-        {cartItems.length > 0 && <AddCoupon refreshCart={refreshCart} />}
+        {cartItems.length > 0 && (
+          <Menu>
+            <MenuHandler>
+              <Button>Apply Coupons</Button>
+            </MenuHandler>
+            <MenuList className="max-h-72">
+              {coupons.map((coupon) => (
+                <MenuItem
+                  key={coupon.id}
+                  onClick={() => handleAddCoupon(coupon._id)}
+                >
+                  {coupon.title} - {coupon.percentage}% Off
+                </MenuItem>
+              ))}
+            </MenuList>
+          </Menu>
+        )}
         <div className="mt-8 italic">
           {/* Render "Bill Details" section only if there are items in the cart */}
           {cartItems.length > 0 && (
