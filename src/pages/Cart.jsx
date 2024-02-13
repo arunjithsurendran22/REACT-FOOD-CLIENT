@@ -12,7 +12,6 @@ import {
   updateGrandTotal,
 } from "../components/ReduxToolkit/cartReducer";
 import "./cart.css";
-import AddCoupon from "../components/shared/AddCoupon";
 import {
   Menu,
   MenuHandler,
@@ -20,6 +19,7 @@ import {
   MenuList,
   MenuItem,
 } from "@material-tailwind/react";
+import { BiSolidOffer } from "react-icons/bi";
 
 const Cart = () => {
   const dispatch = useDispatch();
@@ -194,7 +194,7 @@ const Cart = () => {
         {cartItems.length > 0 && (
           <Menu>
             <MenuHandler>
-              <Button>Apply Coupons</Button>
+              <Button className="flex justify-between w-48 items-center "><BiSolidOffer size={20}/><span>Apply Coupons</span></Button>
             </MenuHandler>
             <MenuList className="max-h-72">
               {coupons.map((coupon) => (

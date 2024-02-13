@@ -19,7 +19,7 @@ const HomePageCategories = () => {
   const [categoriesData, setCategoriesData] = useState([]);
   const [activeIndex, setActiveIndex] = useState(0);
   const [visibleSlides, setVisibleSlides] = useState(5);
-  const [selectedCategoryId, setSelectedCategoryId] = useState(null); // Track selected category
+  const [selectedCategoryId, setSelectedCategoryId] = useState(null); 
 
   useEffect(() => {
     const fetchCategories = async () => {
