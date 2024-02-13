@@ -100,6 +100,7 @@ const Categories = ({ vendorId }) => {
       toast.success("added to cart");
     }catch(error){
       console.log("failed to add cart");
+      toast.error("Please Login")
     }
    
   };

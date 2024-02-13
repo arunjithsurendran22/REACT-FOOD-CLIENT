@@ -35,9 +35,9 @@ const AddAddress = ({onClose ,updateAddresses }) => {
   };
 
   return (
-    <div className="max-w-md mx-auto mt-10 p-4 bg-white rounded ">
+    <div className="max-w-md mx-auto mt-10 p-3 bg-white rounded">
       <h1 className="text-2xl font-bold mb-4">Add Address</h1>
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit} className="">
         <div className="mb-4">
           <label
             htmlFor="street"

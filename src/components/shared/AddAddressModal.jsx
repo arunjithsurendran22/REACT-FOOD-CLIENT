@@ -6,7 +6,7 @@ const AddAddressModal = ({ isOpen, onClose ,updateAddresses }) => {
   
   return (
     <div
-      className={`fixed top-0 left-0 w-full h-full flex items-center justify-center bg-gray-800 bg-opacity-50 ${
+      className={`fixed top-0 left-0 w-full h-full flex items-center justify-center bg-gray-800 bg-opacity-90 ${
         isOpen ? "" : "hidden"
       }`}
     >
