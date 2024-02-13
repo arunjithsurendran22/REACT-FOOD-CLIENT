@@ -51,7 +51,7 @@ const ProfileHeader = () => {
             <img
               src={profile.image || placeholderImage}
               alt="profile-image"
-              className="w-24 rounded-full shadow-lg relative"
+              className="w-24 h-24 rounded-full shadow-lg relative"
             />
 
             <div>
