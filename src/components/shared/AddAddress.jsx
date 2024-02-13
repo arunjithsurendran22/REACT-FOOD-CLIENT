@@ -2,7 +2,7 @@ import { useState } from "react";
 import api from "../authorization/api";
 import { toast } from "react-toastify";
 
-const AddAddress = ({onClose}) => {
+const AddAddress = ({onClose ,updateAddresses }) => {
   const [street, setStreet] = useState("");
   const [city, setCity] = useState("");
   const [state, setState] = useState("");
@@ -12,20 +12,22 @@ const AddAddress = ({onClose}) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await api.post("/profile/add-address/add", {
+      const response = await api.post("/profile/add-address/add", {
         street,
         city,
         state,
         landmark,
         pincode,
       });
+  
       setStreet("");
       setCity("");
       setState("");
       setLandmark("");
       setPincode("");
       toast.success("Address added successfully");
-      onClose()
+      updateAddresses()
+      onClose();
     } catch (error) {
       console.error("Failed to add address", error);
       toast.error("Failed to add address");

@@ -1,7 +1,9 @@
 import AddAddress from "./AddAddress";
 import { IoMdClose } from "react-icons/io";
 
-const AddAddressModal = ({ isOpen, onClose }) => {
+const AddAddressModal = ({ isOpen, onClose ,updateAddresses }) => {
+
+  
   return (
     <div
       className={`fixed top-0 left-0 w-full h-full flex items-center justify-center bg-gray-800 bg-opacity-50 ${
@@ -14,7 +16,7 @@ const AddAddressModal = ({ isOpen, onClose }) => {
             <IoMdClose className="text-red-600 hover:text-2xl font-extrabold" />
           </button>
         </div>
-        <AddAddress onClose={onClose} /> 
+        <AddAddress onClose={onClose}updateAddresses={updateAddresses} /> 
       </div>
     </div>
   );

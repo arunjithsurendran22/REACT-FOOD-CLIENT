@@ -13,11 +13,9 @@ import Favourites from "./pages/Favourites";
 import Settings from "./pages/Settings";
 import VendorPage from "./pages/VendorPage";
 import NavbarBottom from "./components/shared/NavbarBottom";
-
-
+import ForgotPassword from "./pages/ForgotPassword";
 
 function App() {
-
   return (
     <Router>
       <Navabr />
@@ -26,6 +24,7 @@ function App() {
         <Route path="/cart" element={<Cart toast={toast} />} />
         <Route path="/register" element={<UserRegister />} />
         <Route path="/login" element={<UserLogin />} />
+        <Route path="/forgot-password" element={<ForgotPassword />} />
         <Route path="/vendor-page/:vendorId" element={<VendorPage />} />
         <Route path="/profile" element={<Profile />}>
           <Route index element={<Orders />} />
@@ -34,7 +33,7 @@ function App() {
           <Route path="settings" element={<Settings />} />
         </Route>
       </Routes>
-      <NavbarBottom/>
+      <NavbarBottom />
       <ToastContainer />
     </Router>
   );

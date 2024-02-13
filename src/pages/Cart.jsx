@@ -51,7 +51,6 @@ const Cart = () => {
         setCoupons(response.data.coupons);
       } catch (error) {
         console.error("Failed to get coupons:", error);
-        toast.error("Failed to get coupons");
       }
     };
     fetchCoupon();

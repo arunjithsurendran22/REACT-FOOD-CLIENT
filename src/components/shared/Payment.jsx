@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import api from "../authorization/api";
 import { toast } from "react-toastify";
 import { Button } from "@material-tailwind/react";
@@ -18,11 +18,7 @@ const Payment = ({ cartItems, totalToPay, vendorId }) => {
   const [addresses, setAddresses] = useState([]);
   const [isAddAddressModalOpen, setIsAddAddressModalOpen] = useState(false);
   const [isPaymentDisabled, setIsPaymentDisabled] = useState(false);
-  // Function to toggle the address modal
-  const toggleAddAddressModal = () => {
-    setIsAddAddressModalOpen(!isAddAddressModalOpen);
-    setIsPaymentDisabled(!isPaymentDisabled);
-  };
+  
 
   useEffect(() => {
     const fetchUserDetails = async () => {
@@ -53,6 +49,26 @@ const Payment = ({ cartItems, totalToPay, vendorId }) => {
 
     fetchAddresses();
     fetchUserDetails();
+  }, [dispatch]);
+
+  // Function to toggle the address modal
+  const toggleAddAddressModal = () => {
+    setIsAddAddressModalOpen(!isAddAddressModalOpen);
+    setIsPaymentDisabled(!isPaymentDisabled);
+  };
+
+  // Function to update addresses after adding a new one
+  const updateAddresses = useCallback(async () => {
+    try {
+      const response = await api.get("/profile/add-address/get");
+      setAddresses(response.data.addresses);
+
+      if (response.data.addresses.length > 0) {
+        dispatch(setAddress(response.data.addresses[0]._id));
+      }
+    } catch (error) {
+      console.error("Failed to fetch addresses", error);
+    }
   }, [dispatch]);
 
   const handlePaymentFailed = (response) => {
@@ -208,6 +224,7 @@ const Payment = ({ cartItems, totalToPay, vendorId }) => {
           <AddAddressModal
             isOpen={isAddAddressModalOpen}
             onClose={toggleAddAddressModal}
+            updateAddresses={updateAddresses} // Pass the function to update addresses
           />
         </div>
         {addresses.map((address) => (
