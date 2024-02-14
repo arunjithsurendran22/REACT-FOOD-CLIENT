@@ -1,15 +1,15 @@
-import React, { useEffect, useState, useCallback } from "react";
+import  { useEffect, useState, useCallback } from "react";
 import api from "../authorization/api";
 import { toast } from "react-toastify";
 import { Button } from "@material-tailwind/react";
 import { useDispatch, useSelector } from "react-redux";
-import { setAddress, selectAddress } from "../ReduxToolkit/addressSlice";
+import { selectAddress, setAddress } from "../ReduxToolkit/addressSlice";
 import AddAddressModal from "../shared/AddAddressModal";
 
 const Payment = ({ cartItems, totalToPay, vendorId }) => {
   const dispatch = useDispatch();
   const selectedAddress = useSelector(selectAddress);
-
+  
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [mobile, setMobile] = useState("");
@@ -18,7 +18,6 @@ const Payment = ({ cartItems, totalToPay, vendorId }) => {
   const [addresses, setAddresses] = useState([]);
   const [isAddAddressModalOpen, setIsAddAddressModalOpen] = useState(false);
   const [isPaymentDisabled, setIsPaymentDisabled] = useState(false);
-  
 
   useEffect(() => {
     const fetchUserDetails = async () => {
@@ -79,6 +78,11 @@ const Payment = ({ cartItems, totalToPay, vendorId }) => {
     alert(response.error.reason);
     alert(response.error.metadata.order_id);
     alert(response.error.metadata.payment_id);
+  };
+
+  // Function to handle address selection
+  const handleAddressSelection = (address) => {
+    dispatch(setAddress(address));
   };
 
   const paymentHandler = async (e) => {
@@ -215,11 +219,8 @@ const Payment = ({ cartItems, totalToPay, vendorId }) => {
         <div className="p-4 bg-white rounded-md shadow-md flex items-center justify-center">
           {/* Button to open the address modal */}
           <div className="flex justify-center mt-4">
-            <button onClick={toggleAddAddressModal} className="">
-              +
-            </button>
+            <button onClick={toggleAddAddressModal}>+</button>
           </div>
-
           {/* Address modal */}
           <AddAddressModal
             isOpen={isAddAddressModalOpen}
@@ -228,17 +229,14 @@ const Payment = ({ cartItems, totalToPay, vendorId }) => {
           />
         </div>
         {addresses.map((address) => (
-          <div
-            key={address._id}
-            className="mb-2 p-4 bg-white rounded-md shadow-md"
-          >
+          <div key={address._id} className="mb-2 p-4 bg-white rounded-md shadow-md">
             <input
               type="radio"
               id={address._id}
               name="address"
-              value={address}
-              checked={selectedAddress === address._id}
-              onChange={() => dispatch(setAddress(address._id))}
+              value={address._id}
+              checked={selectedAddress && selectedAddress._id === address._id}
+              onChange={() => handleAddressSelection(address)}
             />
             <label htmlFor={address._id} className="ml-2 block">
               <span className="font-semibold">{address.street}</span>
@@ -249,12 +247,12 @@ const Payment = ({ cartItems, totalToPay, vendorId }) => {
           </div>
         ))}
       </div>
-      {/* Render payment button only if address modal is closed */}
-      {!isAddAddressModalOpen && (
+      {/* Render payment button only if address is selected */}
+      {selectedAddress && !isAddAddressModalOpen && (
         <div className="flex justify-center mt-4">
           <Button
             onClick={paymentHandler}
-            disabled={!selectedAddress}
+            disabled={loading}
             className="px-8 py-3 bg-red-500 text-white rounded-md transition duration-300 ease-in-out hover:bg-green-600"
           >
             {loading ? "Processing..." : "PROCEED TO PAYMENT"}
@@ -263,6 +261,8 @@ const Payment = ({ cartItems, totalToPay, vendorId }) => {
       )}
     </div>
   );
+  
+
 };
 
 export default Payment;

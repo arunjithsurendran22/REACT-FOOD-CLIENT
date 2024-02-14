@@ -1,5 +1,3 @@
-// addressSlice.js
-
 import { createSlice } from '@reduxjs/toolkit';
 
 const addressSlice = createSlice({

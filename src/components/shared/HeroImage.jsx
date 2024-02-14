@@ -1,5 +1,5 @@
-import burgerImage from "../../assets/burger-8TCokDPn (1).png";
-import bgImage from "../../assets/bg-v1QzD1cj.png";
+import burgerImage from "../../assets/categories/burger-bg.png";
+import bgImage from "../../assets/categories/red-black.png";
 import "../../components/shared/Style/style.css";
 
 export function HeroImage() {
