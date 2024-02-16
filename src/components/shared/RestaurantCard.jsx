@@ -29,11 +29,11 @@ const RestaurantCard = () => {
   };
 
   return (
-    <div className="container mx-auto  sm:mt-20">
+    <div className="container mx-auto  sm:mt-10">
       {loading ? (
         <p>Loading...</p>
       ) : (
-        <div className="grid grid-cols-2 mx-5 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8 pb-28 ">
+        <div className="grid grid-cols-2 mx-5 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8  pb-20 ">
           {vendorData.map((vendor) => (
             <div
               key={vendor.vendorId}
