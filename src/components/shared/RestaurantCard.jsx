@@ -33,7 +33,7 @@ const RestaurantCard = () => {
       {loading ? (
         <p>Loading...</p>
       ) : (
-        <div className="grid grid-cols-2 mx-5 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8 pb-28">
+        <div className="grid grid-cols-2 mx-5 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8 pb-28 ">
           {vendorData.map((vendor) => (
             <div
               key={vendor.vendorId}
