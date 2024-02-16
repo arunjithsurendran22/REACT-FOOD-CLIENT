@@ -117,7 +117,7 @@ const HomePageCategories = () => {
 
       {/* Category items */}
       <div>
-        <div className="grid grid-cols-2 mx-5 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8 pt-10 pb-20" >
+        <div className="grid grid-cols-2 mx-5 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8 pt-5 pb-20 " style={{border:"2px solid red"}}>
           {selectedCategoryId &&
             categoriesData.map((vendor) => (
               <div
