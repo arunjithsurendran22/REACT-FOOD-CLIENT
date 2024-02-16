@@ -15,6 +15,7 @@ const RatingStar = ({ value, onClick, userRating }) => {
   );
 };
 
+
 const ProductRating = ({ vendorId, productId }) => {
   const [rating, setRating] = useState(null); // Initialize with null
   const [averageRating, setAverageRating] = useState(null);

@@ -95,12 +95,12 @@ const Categories = ({ vendorId }) => {
 
   const handleAddToCart = async (productId) => {
     try{
-      await api.post(`/products/add-to-cart/create/${productId}/${vendorId}`);
+     const response= await api.post(`/products/add-to-cart/create/${productId}/${vendorId}`);
       dispatch(addToCart({ _id: productId, quantity: 1 }));
-      toast.success("added to cart");
+      toast.success(response.data.message);
     }catch(error){
       console.log("failed to add cart");
-      toast.error("Please Login")
+      toast.error("failed to add product /please login")
     }
    
   };
