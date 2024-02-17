@@ -15,6 +15,7 @@ import VendorPage from "./pages/VendorPage";
 import NavbarBottom from "./components/shared/NavbarBottom";
 import ForgotPassword from "./pages/ForgotPassword";
 import ProfileProvider from "../src/components/shared/profile/ProfileProvider";
+import Search from "./pages/Search";
 
 function App() {
   return (
@@ -27,6 +28,7 @@ function App() {
           <Route path="/register" element={<UserRegister />} />
           <Route path="/login" element={<UserLogin />} />
           <Route path="/forgot-password" element={<ForgotPassword />} />
+          <Route path="/search" element={<Search/>}/>
           <Route path="/vendor-page/:vendorId" element={<VendorPage />} />
           <Route path="/profile" element={<Profile />}>
             <Route index element={<Orders />} />
