@@ -10,6 +10,7 @@ const Payment = ({ cartItems, totalToPay, vendorId }) => {
   const dispatch = useDispatch();
   const selectedAddress = useSelector(selectAddress);
   
+  
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [mobile, setMobile] = useState("");
@@ -18,7 +19,9 @@ const Payment = ({ cartItems, totalToPay, vendorId }) => {
   const [addresses, setAddresses] = useState([]);
   const [isAddAddressModalOpen, setIsAddAddressModalOpen] = useState(false);
   const [isPaymentDisabled, setIsPaymentDisabled] = useState(false);
+  const [paymentButton,setPaymentButton] =useState(true)
 
+  console.log(paymentButton);
   useEffect(() => {
     const fetchUserDetails = async () => {
       try {
@@ -83,6 +86,7 @@ const Payment = ({ cartItems, totalToPay, vendorId }) => {
   // Function to handle address selection
   const handleAddressSelection = (address) => {
     dispatch(setAddress(address));
+    setPaymentButton(false)
   };
 
   const paymentHandler = async (e) => {
@@ -248,11 +252,11 @@ const Payment = ({ cartItems, totalToPay, vendorId }) => {
         ))}
       </div>
       {/* Render payment button only if address is selected */}
-      {selectedAddress && !isAddAddressModalOpen && (
-        <div className="flex justify-center mt-4">
+      {!paymentButton &&  (
+        <div className="flex justify-center mt-4 ">
           <Button
             onClick={paymentHandler}
-            disabled={loading}
+            disabled= {paymentButton}
             className="px-8 py-3 bg-red-500 text-white rounded-md transition duration-300 ease-in-out hover:bg-green-600"
           >
             {loading ? "Processing..." : "PROCEED TO PAYMENT"}

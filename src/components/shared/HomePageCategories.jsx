@@ -9,7 +9,6 @@ import {
 import "pure-react-carousel/dist/react-carousel.es.css";
 import api from "../authorization/api";
 import { FaLongArrowAltRight, FaLongArrowAltLeft } from "react-icons/fa";
-import axios from "axios";
 import RestaurantCard from "../shared/RestaurantCard";
 import { useNavigate } from "react-router-dom";
 
@@ -19,7 +18,7 @@ const HomePageCategories = () => {
   const [categoriesData, setCategoriesData] = useState([]);
   const [activeIndex, setActiveIndex] = useState(0);
   const [visibleSlides, setVisibleSlides] = useState(5);
-  const [selectedCategoryId, setSelectedCategoryId] = useState(null); 
+  const [selectedCategoryId, setSelectedCategoryId] = useState(null);
 
   useEffect(() => {
     const fetchCategories = async () => {
@@ -116,10 +115,10 @@ const HomePageCategories = () => {
       </CarouselProvider>
 
       {/* Category items */}
-      <div>
-        <div className="grid grid-cols-2 mx-5 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8 pt-5 pb-20 " style={{border:"2px solid red"}}>
-          {selectedCategoryId &&
-            categoriesData.map((vendor) => (
+      {selectedCategoryId && (
+        <div>
+          <div className="grid grid-cols-2 mx-5 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8 pt-10 pb-20 ">
+            {categoriesData.map((vendor) => (
               <div
                 className="cursor-pointer transform transition duration-300 hover:scale-105 hover:shadow-lg "
                 key={vendor.id}
@@ -131,9 +130,7 @@ const HomePageCategories = () => {
                     alt={vendor.name}
                     className="w-full h-32 md:h-36 object-cover object-center"
                   />
-                  <div
-                    className="p-2 flex flex-col justify-between md:h-32"
-                  >
+                  <div className="p-2 flex flex-col justify-between md:h-32">
                     <h2 className="text-gray-900 text-xs md:text-lg font-bold mb-2">
                       {vendor.name}
                     </h2>
@@ -155,8 +152,9 @@ const HomePageCategories = () => {
                 </div>
               </div>
             ))}
+          </div>
         </div>
-      </div>
+      )}
 
       {/* Default items */}
       {!selectedCategoryId && (

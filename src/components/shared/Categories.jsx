@@ -161,7 +161,7 @@ const Categories = ({ vendorId }) => {
           {sortBy === "highToLow" && <FaArrowDown className="ml-2" />}
         </button>
       </div>
-      <div className="grid grid-cols-2 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 mx-auto mb-20">
+      <div className="grid grid-cols-2 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 mx-auto mb-20 ">
         {(showAllProducts ? allProducts : products).map((product) => (
           <div key={product._id} className="">
             <div className="bg-white h-80 md:h-96 rounded-lg  transform transition duration-300 hover:scale-105 hover:shadow-lg my-5 border border-gray-300">
