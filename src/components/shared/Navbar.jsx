@@ -10,9 +10,9 @@ const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false); // State to manage login status
 
-  const toggleMenu = () => {
-    setIsOpen(!isOpen);
-  };
+  // const toggleMenu = () => {
+  //   setIsOpen(!isOpen);
+  // };
 
   const handleLogout = () => {
     // Logic to handle user logout
@@ -76,7 +76,7 @@ const Navbar = () => {
         </div>
 
         {/* Toggle button only for small screens */}
-        <div className="md:hidden flex items-center">
+        {/* <div className="md:hidden flex items-center">
           <button
             onClick={toggleMenu}
             className="text-3xl"
@@ -84,7 +84,7 @@ const Navbar = () => {
           >
             {isOpen ? <FaTimes /> : <FaBars />}
           </button>
-        </div>
+        </div> */}
       </div>
 
       {/* Render navbar links for small screens */}
