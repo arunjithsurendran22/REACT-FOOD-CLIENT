@@ -28,7 +28,7 @@ const Navbar = () => {
 
   const links = [
     { key: "home", label: "Home", path: "/", icon: <FaHome /> },
-    { key: "search", label: "Search", path: "/search", icon: <FaSearch /> },
+    // { key: "search", label: "Search", path: "/search", icon: <FaSearch /> },
     { key: "cart", label: "Cart", path: "/cart", icon: <FaShoppingCart /> },
     isLoggedIn && {
       key: "logout",
