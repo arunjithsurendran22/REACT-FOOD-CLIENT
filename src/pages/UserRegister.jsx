@@ -1,8 +1,9 @@
 import { Link, useNavigate } from "react-router-dom";
-import { useState } from "react";
+import { useState ,useRef, useEffect } from "react";
 import api from "../components/authorization/api";
 
 function UserRegister() {
+  const inputFocus =useRef()
   const [formData, setFormData] = useState({});
   const [errors, setErrors] = useState({});
   const navigate = useNavigate();
@@ -13,6 +14,9 @@ function UserRegister() {
     // Validate input fields in real-time
     validateField(e.target.id, e.target.value);
   };
+  useEffect(()=>{
+    inputFocus.current.focus()
+  },[])
 
   const validateField = (field, value) => {
     let error = "";
@@ -75,6 +79,7 @@ function UserRegister() {
         </h1>
         <form className="flex flex-col gap-4" onSubmit={handleSubmit}>
           <input
+          ref={inputFocus}
             type="text"
             id="name"
             placeholder="Name"

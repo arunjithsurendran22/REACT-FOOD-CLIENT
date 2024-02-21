@@ -55,7 +55,7 @@ const Navbar = () => {
     <nav className="shadow-md p-1 md:p-4 fixed top-0 left-0 right-0 bg-white z-50">
       <div className="container mx-auto flex justify-between items-center">
         <div className="flex items-center">
-          <span className="text-2xl font-bold text-gray-900">
+          <span className="text-2xl font-bold text-gray-900 flex items-center italic">
             <Link to="/">
               <img
                 src="https://i.pinimg.com/originals/72/7e/f7/727ef7286f28b289fd1188eefdd2b626.jpg"
@@ -63,6 +63,7 @@ const Navbar = () => {
                 className="w-10"
               />
             </Link>
+            <h6 className="ml-72 md:ml-4 font-thin">HungryHub</h6>
           </span>
         </div>
 
@@ -91,13 +92,13 @@ const Navbar = () => {
         </div>
 
         <div className="md:hidden">
-          <button
+          {/* <button
             onClick={() => setIsOpen(!isOpen)}
             className="text-3xl"
             style={{ backgroundColor: "transparent" }}
           >
             {isOpen ? <FaTimes /> : <FaBars />}
-          </button>
+          </button> */}
         </div>
       </div>
 

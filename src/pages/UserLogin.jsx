@@ -1,9 +1,10 @@
-import { useState } from "react";
+import { useState ,useRef, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import api from "../components/authorization/api";
 
 function UserLogin() {
+  const inputFocus =useRef()
   const [formData, setFormData] = useState({});
   const [errors, setErrors] = useState({});
   const navigate = useNavigate();
@@ -11,6 +12,10 @@ function UserLogin() {
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.id]: e.target.value });
   };
+
+  useEffect(()=>{
+    inputFocus.current.focus()
+  },[])
 
   const validateForm = () => {
     const errors = {};
@@ -70,6 +75,7 @@ function UserLogin() {
         </h1>
         <form onSubmit={handleSubmit} className="flex flex-col gap-4">
           <input
+          ref={inputFocus}
             type="email"
             id="email"
             placeholder="Email"
