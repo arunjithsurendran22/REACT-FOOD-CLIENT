@@ -19,6 +19,8 @@ function UserRegister() {
     if (field === "email") {
       if (!value.trim()) {
         error = "Email is required";
+      } else if (!value.includes("@")) {
+        error = "Email must contain @";
       } else {
         error = "";
       }
@@ -29,6 +31,14 @@ function UserRegister() {
         error = "Password must be at least 6 characters long";
       } else if (!/(?=.*[a-z])(?=.*[A-Z])(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]+$/.test(value)) {
         error = "Password must contain at least one uppercase letter, one lowercase letter, and one special character (@, $, !, %, *, ?, or &)";
+      } else {
+        error = "";
+      }
+    } else if (field === "mobile") {
+      if (!value) {
+        error = "Mobile is required";
+      } else if (!/^\d{10}$/.test(value)) {
+        error = "Mobile number must be 10 digits";
       } else {
         error = "";
       }
@@ -50,9 +60,11 @@ function UserRegister() {
   };
 
   const validateForm = () => {
+    const nameError = errors.name;
     const emailError = errors.email;
     const passwordError = errors.password;
-    return emailError === "" && passwordError === "";
+    const mobileError = errors.mobile;
+    return nameError === "" && emailError === "" && passwordError === "" && mobileError === "";
   };
 
   return (
@@ -73,9 +85,10 @@ function UserRegister() {
             type="text"
             id="mobile"
             placeholder="Mobile"
-            className="bg-slate-100 p-3 rounded-xl shadow-lg"
+            className={`bg-slate-100 p-3 rounded-xl shadow-lg ${errors.mobile && "border-red-500"}`}
             onChange={handleChange}
           />
+          {errors.mobile && <span className="text-red-500">{errors.mobile}</span>}
           <input
             type="email"
             id="email"

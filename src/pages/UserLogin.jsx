@@ -16,9 +16,13 @@ function UserLogin() {
     const errors = {};
     if (!formData.email || !formData.email.trim()) {
       errors.email = "Email is required";
+    } else if (!/^\S+@\S+\.\S+$/.test(formData.email.trim())) {
+      errors.email = "Email is not in valid format";
     }
     if (!formData.password) {
       errors.password = "Password is required";
+    } else if (formData.password.length < 6) {
+      errors.password = "Password must be at least 6 characters long";
     }
     setErrors(errors);
     return Object.keys(errors).length === 0;
@@ -34,14 +38,15 @@ function UserLogin() {
     if (validateForm()) {
       try {
         const response = await api.post("/profile/login", formData);
-        console.log(response.data);
+
         if (response.data.message === "User Login successful") {
           toast.success("Login Successfully");
           handleLoginToken(response.data);
           navigate("/");
+          window.location.reload();
         } else {
           toast.error(response.data.message);
-          setFormData("")
+          setFormData({ ...formData, password: "" }); // Clear password field on error
         }
       } catch (error) {
         if (
@@ -56,7 +61,6 @@ function UserLogin() {
       }
     }
   };
-  
 
   return (
     <div className="max-w-lg mx-auto p-4">
@@ -68,7 +72,7 @@ function UserLogin() {
           <input
             type="email"
             id="email"
-            placeholder="email"
+            placeholder="Email"
             className={`bg-slate-100 p-3 rounded-xl shadow-lg ${
               errors.email && "border-red-500"
             }`}
@@ -78,7 +82,7 @@ function UserLogin() {
           <input
             type="password"
             id="password"
-            placeholder="password"
+            placeholder="Password"
             className={`bg-slate-100 p-3 rounded-xl shadow-lg ${
               errors.password && "border-red-500"
             }`}
@@ -95,14 +99,15 @@ function UserLogin() {
           </button>
         </form>
         <span className="my-5 italic">Don't have an Account ?</span>
-        
+
         <Link to="/register">
           <span className="text-blue-600 mx-5 font-bold">Register</span>
         </Link>
-        
       </div>
-      <Link to='/forgot-password'><span className="italic text-red-700">Forgot password</span></Link> 
-    </div>  
+      <Link to="/forgot-password">
+        <span className="italic text-red-700">Forgot password</span>
+      </Link>
+    </div>
   );
 }
 
