@@ -63,7 +63,7 @@ const Navbar = () => {
                 className="w-10"
               />
             </Link>
-            <h6 className="ml-72 md:ml-4 font-thin">HungryHub</h6>
+            <h6 className="ml-52 sm:ml-96 md:ml-4 font-thin text-sm md:text-lg">HungryHub</h6>
           </span>
         </div>
 
