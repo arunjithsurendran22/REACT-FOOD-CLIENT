@@ -1,9 +1,10 @@
 import { Link, useNavigate } from "react-router-dom";
-import { useState ,useRef, useEffect } from "react";
+import { useState, useRef, useEffect } from "react";
 import api from "../components/authorization/api";
+import { toast } from "react-toastify";
 
 function UserRegister() {
-  const inputFocus =useRef()
+  const inputFocus = useRef();
   const [formData, setFormData] = useState({});
   const [errors, setErrors] = useState({});
   const navigate = useNavigate();
@@ -14,9 +15,9 @@ function UserRegister() {
     // Validate input fields in real-time
     validateField(e.target.id, e.target.value);
   };
-  useEffect(()=>{
-    inputFocus.current.focus()
-  },[])
+  useEffect(() => {
+    inputFocus.current.focus();
+  }, []);
 
   const validateField = (field, value) => {
     let error = "";
@@ -33,8 +34,11 @@ function UserRegister() {
         error = "Password is required";
       } else if (value.length < 6) {
         error = "Password must be at least 6 characters long";
-      } else if (!/(?=.*[a-z])(?=.*[A-Z])(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]+$/.test(value)) {
-        error = "Password must contain at least one uppercase letter, one lowercase letter, and one special character (@, $, !, %, *, ?, or &)";
+      } else if (
+        !/(?=.*[a-z])(?=.*[A-Z])(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]+$/.test(value)
+      ) {
+        error =
+          "Password must contain at least one uppercase letter, one lowercase letter, and one special character (@, $, !, %, *, ?, or &)";
       } else {
         error = "";
       }
@@ -49,16 +53,29 @@ function UserRegister() {
     }
     setErrors((prevErrors) => ({ ...prevErrors, [field]: error }));
   };
-
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (validateForm()) {
       try {
         const response = await api.post("/profile/register", formData);
         console.log("Registration successful:", response.data);
-        navigate("/login");
+        if (response.data.message === "user registered successfully") {
+          toast.success("User registered successfully");
+          navigate("/login");
+        } else {
+          toast.error(response.data.message);
+        }
       } catch (error) {
-        console.log("Register failed", error.response.data);
+        // Handle backend validation errors
+        if (
+          error.response &&
+          error.response.data &&
+          error.response.data.message
+        ) {
+          toast.error(error.response.data.message);
+        } else {
+          console.log("Register failed", error);
+        }
       }
     }
   };
@@ -68,7 +85,12 @@ function UserRegister() {
     const emailError = errors.email;
     const passwordError = errors.password;
     const mobileError = errors.mobile;
-    return nameError === "" && emailError === "" && passwordError === "" && mobileError === "";
+    return (
+      nameError === "" &&
+      emailError === "" &&
+      passwordError === "" &&
+      mobileError === ""
+    );
   };
 
   return (
@@ -79,7 +101,7 @@ function UserRegister() {
         </h1>
         <form className="flex flex-col gap-4" onSubmit={handleSubmit}>
           <input
-          ref={inputFocus}
+            ref={inputFocus}
             type="text"
             id="name"
             placeholder="Name"
@@ -90,15 +112,21 @@ function UserRegister() {
             type="text"
             id="mobile"
             placeholder="Mobile"
-            className={`bg-slate-100 p-3 rounded-xl shadow-lg ${errors.mobile && "border-red-500"}`}
+            className={`bg-slate-100 p-3 rounded-xl shadow-lg ${
+              errors.mobile && "border-red-500"
+            }`}
             onChange={handleChange}
           />
-          {errors.mobile && <span className="text-red-500">{errors.mobile}</span>}
+          {errors.mobile && (
+            <span className="text-red-500">{errors.mobile}</span>
+          )}
           <input
             type="email"
             id="email"
             placeholder="Email"
-            className={`bg-slate-100 p-3 rounded-xl shadow-lg ${errors.email && "border-red-500"}`}
+            className={`bg-slate-100 p-3 rounded-xl shadow-lg ${
+              errors.email && "border-red-500"
+            }`}
             onChange={handleChange}
           />
           {errors.email && <span className="text-red-500">{errors.email}</span>}
@@ -106,10 +134,14 @@ function UserRegister() {
             type="password"
             id="password"
             placeholder="Password"
-            className={`bg-slate-100 p-3 rounded-xl shadow-lg ${errors.password && "border-red-500"}`}
+            className={`bg-slate-100 p-3 rounded-xl shadow-lg ${
+              errors.password && "border-red-500"
+            }`}
             onChange={handleChange}
           />
-          {errors.password && <span className="text-red-500">{errors.password}</span>}
+          {errors.password && (
+            <span className="text-red-500">{errors.password}</span>
+          )}
           <button
             type="submit"
             className="bg-gray-800 text-cyan-50 p-3 my-6 rounded-xl shadow-inner text-xl font-bold hover:opacity-90"
